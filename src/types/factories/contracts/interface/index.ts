@@ -2,14 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as curveSol from "./Curve.sol";
-export * as isIxeTokenSol from "./IsIXEToken.sol";
 export * as uni2Sol from "./Uni2.sol";
 export { IAggregationExecutor__factory } from "./IAggregationExecutor__factory";
 export { IAggregationRouterV1__factory } from "./IAggregationRouterV1__factory";
-export { ICampFire__factory } from "./ICampFire__factory";
-export { IEisenMultihopRouter__factory } from "./IEisenMultihopRouter__factory";
-export { IMiningTreasury__factory } from "./IMiningTreasury__factory";
-export { IRewarder__factory } from "./IRewarder__factory";
 export { IUniswapV2Factory__factory } from "./IUniswapV2Factory__factory";
 export { IUniswapV2Pair__factory } from "./IUniswapV2Pair__factory";
 export { IViewer__factory } from "./IViewer__factory";

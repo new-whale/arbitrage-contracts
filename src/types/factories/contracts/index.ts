@@ -5,4 +5,3 @@ export * as curve from "./Curve";
 export * as uni2 from "./Uni2";
 export * as interface from "./interface";
 export * as libraries from "./libraries";
-export { Greeter__factory } from "./Greeter__factory";

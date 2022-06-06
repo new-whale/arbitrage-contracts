@@ -3,16 +3,10 @@
 /* eslint-disable */
 import type * as curveSol from "./Curve.sol";
 export type { curveSol };
-import type * as isIxeTokenSol from "./IsIXEToken.sol";
-export type { isIxeTokenSol };
 import type * as uni2Sol from "./Uni2.sol";
 export type { uni2Sol };
 export type { IAggregationExecutor } from "./IAggregationExecutor";
 export type { IAggregationRouterV1 } from "./IAggregationRouterV1";
-export type { ICampFire } from "./ICampFire";
-export type { IEisenMultihopRouter } from "./IEisenMultihopRouter";
-export type { IMiningTreasury } from "./IMiningTreasury";
-export type { IRewarder } from "./IRewarder";
 export type { IUniswapV2Factory } from "./IUniswapV2Factory";
 export type { IUniswapV2Pair } from "./IUniswapV2Pair";
 export type { IViewer } from "./IViewer";

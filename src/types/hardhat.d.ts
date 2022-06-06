@@ -81,10 +81,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IPoolRegistry__factory>;
     getContractFactory(
-      name: "Greeter",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.Greeter__factory>;
-    getContractFactory(
       name: "Curve",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Curve__factory>;
@@ -104,26 +100,6 @@ declare module "hardhat/types/runtime" {
       name: "IAggregationRouterV1",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IAggregationRouterV1__factory>;
-    getContractFactory(
-      name: "ICampFire",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ICampFire__factory>;
-    getContractFactory(
-      name: "IEisenMultihopRouter",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IEisenMultihopRouter__factory>;
-    getContractFactory(
-      name: "IMiningTreasury",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IMiningTreasury__factory>;
-    getContractFactory(
-      name: "IRewarder",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IRewarder__factory>;
-    getContractFactory(
-      name: "IsIZNToken",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IsIZNToken__factory>;
     getContractFactory(
       name: "IUniswapV2Factory",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -148,10 +124,6 @@ declare module "hardhat/types/runtime" {
       name: "Uni2",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Uni2__factory>;
-    getContractFactory(
-      name: "InitializableOwnable",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.InitializableOwnable__factory>;
     getContractFactory(
       name: "Multicall2",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -355,11 +327,6 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IPoolRegistry>;
     getContractAt(
-      name: "Greeter",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.Greeter>;
-    getContractAt(
       name: "Curve",
       address: string,
       signer?: ethers.Signer
@@ -384,31 +351,6 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IAggregationRouterV1>;
-    getContractAt(
-      name: "ICampFire",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ICampFire>;
-    getContractAt(
-      name: "IEisenMultihopRouter",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IEisenMultihopRouter>;
-    getContractAt(
-      name: "IMiningTreasury",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IMiningTreasury>;
-    getContractAt(
-      name: "IRewarder",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IRewarder>;
-    getContractAt(
-      name: "IsIZNToken",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IsIZNToken>;
     getContractAt(
       name: "IUniswapV2Factory",
       address: string,
@@ -439,11 +381,6 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.Uni2>;
-    getContractAt(
-      name: "InitializableOwnable",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.InitializableOwnable>;
     getContractAt(
       name: "Multicall2",
       address: string,

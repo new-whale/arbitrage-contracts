@@ -9,4 +9,3 @@ import type * as interface from "./interface";
 export type { interface };
 import type * as libraries from "./libraries";
 export type { libraries };
-export type { Greeter } from "./Greeter";
