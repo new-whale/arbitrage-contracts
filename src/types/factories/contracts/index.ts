@@ -5,3 +5,4 @@ export * as curve from "./Curve";
 export * as uni2 from "./Uni2";
 export * as interface from "./interface";
 export * as libraries from "./libraries";
+export { AggregationExecutor__factory } from "./AggregationExecutor__factory";

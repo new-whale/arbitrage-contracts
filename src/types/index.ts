@@ -22,6 +22,8 @@ export type { IERC20Metadata } from "./@openzeppelin/contracts/token/ERC20/exten
 export { IERC20Metadata__factory } from "./factories/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata__factory";
 export type { IERC20 } from "./@openzeppelin/contracts/token/ERC20/IERC20";
 export { IERC20__factory } from "./factories/@openzeppelin/contracts/token/ERC20/IERC20__factory";
+export type { AggregationExecutor } from "./contracts/AggregationExecutor";
+export { AggregationExecutor__factory } from "./factories/contracts/AggregationExecutor__factory";
 export type { Eklipse } from "./contracts/Curve/Eklipse.sol/Eklipse";
 export { Eklipse__factory } from "./factories/contracts/Curve/Eklipse.sol/Eklipse__factory";
 export type { EklipseHelper } from "./contracts/Curve/Eklipse.sol/EklipseHelper";
@@ -50,6 +52,8 @@ export type { IAggregationExecutor } from "./contracts/interface/IAggregationExe
 export { IAggregationExecutor__factory } from "./factories/contracts/interface/IAggregationExecutor__factory";
 export type { IAggregationRouterV1 } from "./contracts/interface/IAggregationRouterV1";
 export { IAggregationRouterV1__factory } from "./factories/contracts/interface/IAggregationRouterV1__factory";
+export type { IEisenMultihopRouter } from "./contracts/interface/IEisenMultihopRouter";
+export { IEisenMultihopRouter__factory } from "./factories/contracts/interface/IEisenMultihopRouter__factory";
 export type { IUniswapV2Factory } from "./contracts/interface/IUniswapV2Factory";
 export { IUniswapV2Factory__factory } from "./factories/contracts/interface/IUniswapV2Factory__factory";
 export type { IUniswapV2Pair } from "./contracts/interface/IUniswapV2Pair";

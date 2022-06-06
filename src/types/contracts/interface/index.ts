@@ -7,6 +7,7 @@ import type * as uni2Sol from "./Uni2.sol";
 export type { uni2Sol };
 export type { IAggregationExecutor } from "./IAggregationExecutor";
 export type { IAggregationRouterV1 } from "./IAggregationRouterV1";
+export type { IEisenMultihopRouter } from "./IEisenMultihopRouter";
 export type { IUniswapV2Factory } from "./IUniswapV2Factory";
 export type { IUniswapV2Pair } from "./IUniswapV2Pair";
 export type { IViewer } from "./IViewer";

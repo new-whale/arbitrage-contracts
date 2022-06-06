@@ -45,6 +45,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC20__factory>;
     getContractFactory(
+      name: "AggregationExecutor",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.AggregationExecutor__factory>;
+    getContractFactory(
       name: "Eklipse",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Eklipse__factory>;
@@ -100,6 +104,10 @@ declare module "hardhat/types/runtime" {
       name: "IAggregationRouterV1",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IAggregationRouterV1__factory>;
+    getContractFactory(
+      name: "IEisenMultihopRouter",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IEisenMultihopRouter__factory>;
     getContractFactory(
       name: "IUniswapV2Factory",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -282,6 +290,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IERC20>;
     getContractAt(
+      name: "AggregationExecutor",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.AggregationExecutor>;
+    getContractAt(
       name: "Eklipse",
       address: string,
       signer?: ethers.Signer
@@ -351,6 +364,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IAggregationRouterV1>;
+    getContractAt(
+      name: "IEisenMultihopRouter",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IEisenMultihopRouter>;
     getContractAt(
       name: "IUniswapV2Factory",
       address: string,
