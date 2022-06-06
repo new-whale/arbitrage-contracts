@@ -128,7 +128,7 @@ contract NewWhaleRouter is INewWhaleRouter, Ownable, Pausable, ReentrancyGuard {
         address from,
         address to,
         uint256 deadline
-    ) external payable override onlyAllowedUser ensure(deadline) returns (uint256 amountOut) {
+    ) external payable override onlyAllowedUser ensure(deadline) returns (uint256 totalAmountOut) {
         (address tokenIn, address tokenOut) = validateSwapRoute(swapRoute);
 
         if (tokenIn != address(0)) {
@@ -154,7 +154,7 @@ contract NewWhaleRouter is INewWhaleRouter, Ownable, Pausable, ReentrancyGuard {
             }
         }
 
-        uint256 totalAmountOut = IERC20(tokenOut).uniBalanceOf(address(this));
+        totalAmountOut = IERC20(tokenOut).uniBalanceOf(address(this));
         require(totalAmountOut >= minAmountOut, "Slippage");
 
         IERC20(tokenOut).uniTransfer(to, totalAmountOut);
