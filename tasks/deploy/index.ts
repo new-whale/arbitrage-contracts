@@ -1,1 +1,2 @@
 import "./claimswap";
+import "./newwhale";
