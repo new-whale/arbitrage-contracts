@@ -7,6 +7,7 @@ import "./IWKLAY.sol";
 import "./IViewer.sol";
 import "../libraries/UniERC20.sol";
 import "../libraries/Ownable.sol";
+import { Address } from "../libraries/Address.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 
@@ -75,6 +76,7 @@ interface IUni2 {
 abstract contract Uni2 is IUni2, IViewer, Ownable, Pausable {
     using SafeERC20 for IERC20;
     using UniERC20 for IERC20;
+    using Address for address;
 
     fallback() external payable {}
 
@@ -94,6 +96,9 @@ abstract contract Uni2 is IUni2, IViewer, Ownable, Pausable {
     }
 
     function tokenInfo(address token) external view virtual override returns (ITokenViewer memory) {
+        if (!token.isContract()) {
+            return ITokenViewer(token, 18, "Destroyed token", "Destroyed token");
+        }
         ITokenViewer memory Token = ITokenViewer(
             token,
             IERC20Metadata(token).decimals(),

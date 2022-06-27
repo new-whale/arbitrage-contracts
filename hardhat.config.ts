@@ -94,6 +94,16 @@ const config: HardhatUserConfig = {
     "polygon-mainnet": getChainConfig("polygon-mainnet"),
     "polygon-mumbai": getChainConfig("polygon-mumbai"),
     rinkeby: getChainConfig("rinkeby"),
+    klaytn: {
+      url: "https://klaytn-en.sixnetwork.io:8651/",
+      // url: "https://public-node-api.klaytnapi.com/v1/cypress",
+      gasPrice: 250000000000,
+      accounts: {
+        count: 10,
+        mnemonic,
+        path: "m/44'/60'/0'/0",
+      },
+    },
   },
   paths: {
     artifacts: "./artifacts",
