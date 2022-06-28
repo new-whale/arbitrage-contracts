@@ -51,15 +51,20 @@ contract NewWhaleRouter is INewWhaleRouter, Ownable, Pausable, ReentrancyGuard {
     }
 
     function getTokenIn(SingleSwapRoute memory route) private pure returns (address tokenIn) {
+        require(route.routes.length > 0, "EMPTY_ROUTE");
+        require(route.routes[0].path.length > 0, "EMPTY_PATH");
         tokenIn = route.routes[0].path[0];
     }
 
     function getTokenOut(SingleSwapRoute memory route) private pure returns (address tokenOut) {
-        tokenOut = route.routes[route.routes.length - 1].path[route.routes[route.routes.length - 1].path.length];
+        require(route.routes.length > 0, "EMPTY_ROUTE");
+        require(route.routes[route.routes.length - 1].path.length > 0, "EMPTY_PATH");
+        tokenOut = route.routes[route.routes.length - 1].path[route.routes[route.routes.length - 1].path.length - 1];
     }
 
     /// check whether the given swap route is valid
     function validateSwapRoute(SwapRoute memory swapRoute) private view returns (address tokenIn, address tokenOut) {
+        require(swapRoute.routes.length > 0, "EMPTY_SWAP_ROUTE");
         tokenIn = getTokenIn(swapRoute.routes[0]);
         tokenOut = getTokenOut(swapRoute.routes[0]);
 
@@ -80,8 +85,8 @@ contract NewWhaleRouter is INewWhaleRouter, Ownable, Pausable, ReentrancyGuard {
             for (uint256 j = 0; j < route.routes.length; j++) {
                 SingleDexSwapRoute memory singleDexRoute = route.routes[j];
 
-                require(prevTokenOut == singleDexRoute.path[0], "Token path not connected.");
                 require(singleDexRoute.path.length >= 2, "Single dex path must be greater than or equal to 2.");
+                require(prevTokenOut == singleDexRoute.path[0], "Token path not connected.");
                 require(singleDexRoute.dexId < _dexRouters.length(), "NOT_ADDED_DEX");
 
                 prevTokenOut = singleDexRoute.path[singleDexRoute.path.length - 1];
@@ -117,6 +122,7 @@ contract NewWhaleRouter is INewWhaleRouter, Ownable, Pausable, ReentrancyGuard {
 
     function _addDex(address dex, DexType dexType) internal {
         require(dex.isContract(), "following dex is not a contract");
+        require(!_dexRouters.contains(dex), "already added dex");
         _dexTypes[_dexRouters.length()] = dexType;
         _dexRouters.add(dex);
     }
