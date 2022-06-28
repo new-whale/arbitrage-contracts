@@ -18,6 +18,7 @@ interface IViewer {
         uint256 totalSupply;
         uint256[] tokenBalances;
         address pool;
+        address lpToken;
         address[] tokenList;
         uint64[] fees;
         uint8 decimals;

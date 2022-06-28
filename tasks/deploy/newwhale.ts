@@ -44,12 +44,12 @@ const allRouters = [
     Type: 0,
   },
   {
-    Address: "0xeEEfe4E24f67FBe8483cF5615DFEeda77a1f5D01",
+    Address: "0xB9146A0B053B1C69815f21D580867F175a62F8c1",
     Name: "I4i",
     Type: 1,
   },
   {
-    Address: "0x822172425ADb4900591fB90eC4Fb347b3084Fd39",
+    Address: "0x78d77d2397E6420304B347B5288558eD45EF67D8",
     Name: "Eklipse",
     Type: 1,
   },
@@ -71,7 +71,7 @@ task("deploy:NewWhaleRouter")
       );
       await newWhaleRouter.deployed();
     } else {
-      newWhaleRouter = NewWhaleRouter__factory.connect("0xacd83e9c49f9e2818feb40bb988b3184ded402e8", signer);
+      newWhaleRouter = NewWhaleRouter__factory.connect("0xDA34CEB0c80315197d5e2B8A0a304CDDd82FD518", signer);
     }
 
     const klayToUsdt: INewWhaleRouter.SwapRouteStruct = {

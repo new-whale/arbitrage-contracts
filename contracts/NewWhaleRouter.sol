@@ -193,16 +193,23 @@ contract NewWhaleRouter is INewWhaleRouter, Ownable, Pausable, ReentrancyGuard {
         address[] memory path,
         uint8 dexId
     ) internal returns (uint256 amountOut) {
-        if (path[0] != address(0)) {
+        if (path[0] == address(0)) {
+            amountOut = ICurve(_dexRouters.at(dexId)).swapWithPath{ value: amountIn }(
+                path,
+                amountIn,
+                // minAmount = 1
+                1
+            );
+        } else {
             approveIfNeeded(path[0], _dexRouters.at(dexId), amountIn);
+            // swap within pool
+            amountOut = ICurve(_dexRouters.at(dexId)).swapWithPath(
+                path,
+                amountIn,
+                // minAmount = 1
+                1
+            );
         }
-        // swap within pool
-        amountOut = ICurve(_dexRouters.at(dexId)).swapWithPath(
-            path,
-            amountIn,
-            // minAmount = 1
-            1
-        );
     }
 
     function approveIfNeeded(

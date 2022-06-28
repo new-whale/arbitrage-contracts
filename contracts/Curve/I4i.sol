@@ -255,6 +255,8 @@ contract I4i is Curve {
             _minAmount
         );
         output = outputs[outputs.length - 1];
+
+        IERC20(_path[_path.length - 1]).uniTransfer(_msgSender(), output);
     }
 
     function addLiquidityKLAY(
@@ -357,7 +359,8 @@ contract I4i is Curve {
             A: WPool.A(),
             totalSupply: IERC20Metadata(token).totalSupply(),
             tokenBalances: WPool.balanceList(),
-            pool: token,
+            pool: _pool,
+            lpToken: token,
             tokenList: WPool.coinList(),
             fees: fees,
             decimals: tokenDesc.decimals,

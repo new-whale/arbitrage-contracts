@@ -4,7 +4,7 @@ import "../interface/Curve.sol";
 
 // Eklipse 0.06% of output swap fee
 library EklipseHelper {
-    address public constant router = 0xFD10276D98f303F60f951E3FF2Ef5213B9349152;
+    address public constant router = 0x0358D0bA60667a17e25473640f772DDC77175962;
     address public constant WKLAY = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
     IEklipseRouter public constant CurveRouter = IEklipseRouter(router);
 }
@@ -207,6 +207,8 @@ contract Eklipse is Curve {
             _minAmount,
             block.timestamp + 3000
         );
+
+        IERC20(path[path.length - 1]).uniTransfer(_msgSender(), output);
     }
 
     function addLiquidityKLAY(
@@ -322,7 +324,8 @@ contract Eklipse is Curve {
             A: WPool.getA(),
             totalSupply: IERC20Metadata(token).totalSupply(),
             tokenBalances: WPool.getTokenBalances(),
-            pool: token,
+            pool: pool,
+            lpToken: token,
             tokenList: WPool.getTokens(),
             fees: fees,
             decimals: tokenDesc.decimals,
