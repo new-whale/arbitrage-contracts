@@ -34,7 +34,7 @@ const allRouters = [
     Type: 0,
   },
   {
-    Address: "0x0147F7A4dD37Aa8C184b769564700D7aeB6eB280",
+    Address: "0x92Ac54216A7Ff37B5BE1b6A9240cf81646923920",
     Name: "Claimswap",
     Type: 0,
   },
@@ -71,7 +71,7 @@ task("deploy:NewWhaleRouter")
       );
       await newWhaleRouter.deployed();
     } else {
-      newWhaleRouter = NewWhaleRouter__factory.connect("0xDA34CEB0c80315197d5e2B8A0a304CDDd82FD518", signer);
+      newWhaleRouter = NewWhaleRouter__factory.connect("0xB3E9025c27eEB991Fb3786B8779a18195e298DaE", signer);
     }
 
     const klayToUsdt: INewWhaleRouter.SwapRouteStruct = {
