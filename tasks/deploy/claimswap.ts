@@ -1,4 +1,5 @@
 import type { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
+import { BigNumber } from "ethers";
 import { task } from "hardhat/config";
 import type { TaskArguments } from "hardhat/types";
 
@@ -20,25 +21,15 @@ task("deploy:Claimswap")
       claimswap = Claimswap__factory.connect("0x92Ac54216A7Ff37B5BE1b6A9240cf81646923920", signer);
     }
     console.log("Contract address: ", claimswap.address);
-    // const tokenInfos = await claimswap.tokenInfos();
-    // console.log("TokenInfos: ", tokenInfos.slice(0, 10));
-    // const wklay = await claimswap.WKLAY();
     const klay = "0x0000000000000000000000000000000000000000";
     const ousdt = "0xcee8faf64bb97a73bb51e115aa89c17ffa8dd167";
-    const krno = "0xd676e57ca65b827feb112ad81ff738e7b6c1048d";
-    // const amountss = await claimswap.getAmountsOut(BigNumber.from("1000000"), [ousdt, klay]);
-    // console.log(`Amounts: ${amountss}`)
-    // const amounts = await claimswap.getAmountsOut(value, [klay, ousdt]);
-    // console.log(`Amounts: ${amounts}`)
-    // const r = await (await claimswap.swapExactKlay(10, [klay, ousdt],{value: value})).wait();
-    // console.log(`Swap tx ${r.transactionHash}`);
+    const amount = 10000;
+    const value = BigNumber.from("1000000000000000000");
 
-    // const simRes = await claimswap.callStatic.swapExactKlay(10, [klay, ousdt],{value: value});
-    // console.log(`Simulation result: ${simRes}`)
+    const simRes = await claimswap.callStatic.swapExactKlay(10, [klay, ousdt], { value });
+    console.log(`Simulation result: ${simRes}`);
 
     const path = [ousdt, klay];
-    const amount = 10000;
-
     const amounts = await claimswap.getAmountsOut(amount, path);
     console.log(`getAmountsOut: ${amounts}`);
 

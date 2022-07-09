@@ -148,7 +148,7 @@ contract Ufoswap is Uni2 {
         if (path[path.length - 1] == address(0)) {
             _swap(amounts, uni2Path, address(this));
             IWKLAY(uni2Path[uni2Path.length - 1]).withdraw(amounts[amounts.length - 1]);
-            IERC20(uni2Path[uni2Path.length - 1]).uniTransfer(_msgSender(), amounts[amounts.length - 1]);
+            IERC20(address(0)).uniTransfer(_msgSender(), amounts[amounts.length - 1]);
         } else {
             _swap(amounts, uni2Path, _msgSender());
         }
@@ -174,7 +174,7 @@ contract Ufoswap is Uni2 {
         if (path[path.length - 1] == address(0)) {
             _swap(amounts, uni2Path, address(this));
             IWKLAY(uni2Path[uni2Path.length - 1]).withdraw(amounts[amounts.length - 1]);
-            IERC20(uni2Path[uni2Path.length - 1]).uniTransfer(_msgSender(), amounts[amounts.length - 1]);
+            IERC20(address(0)).uniTransfer(_msgSender(), amounts[amounts.length - 1]);
         } else {
             _swap(amounts, uni2Path, _msgSender());
         }

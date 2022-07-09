@@ -9,7 +9,7 @@ import { NewWhaleRouter__factory } from "../../src/types/factories/contracts/New
 // from constants/router.go
 const allRouters = [
   {
-    Address: "0xC5d8642EDaEBA754775B5562cf8Aef8d507dE1cF",
+    Address: "0x646AC9D6f4bDfBC9Cd0bc0FC932f273c864136B9",
     Name: "Definix",
     Type: 0,
   },
@@ -19,17 +19,17 @@ const allRouters = [
     Type: 0,
   },
   {
-    Address: "0x75E1Dc08BbA20aBf73f4Dabd9c3621969F1432c2",
+    Address: "0x6B128C502D30D9D4C43a1002071d5151CE4BBd81",
     Name: "Ufoswap",
     Type: 0,
   },
   {
-    Address: "0xDa3Aa1eD4B0C792a0022378779972cc5D4792cf8",
+    Address: "0xd1286716B4A91b5dA85759260be1FB24724E50D4",
     Name: "Paladex",
     Type: 0,
   },
   {
-    Address: "0x44c580eB1031EeAcb5b62352D6D7287674fe6E63",
+    Address: "0x49827F9910797ba0Db9eC7306D7fb8C447bf13eC",
     Name: "Roundrobin",
     Type: 0,
   },
@@ -39,7 +39,7 @@ const allRouters = [
     Type: 0,
   },
   {
-    Address: "0x4e13fD35F4Decb24150dfA1Cf392E56E406a5bA4",
+    Address: "0x880E6f7E82584200daba1269f9F1EB82d05f6479",
     Name: "Neuronswap",
     Type: 0,
   },
@@ -71,7 +71,7 @@ task("deploy:NewWhaleRouter")
       );
       await newWhaleRouter.deployed();
     } else {
-      newWhaleRouter = NewWhaleRouter__factory.connect("0xB3E9025c27eEB991Fb3786B8779a18195e298DaE", signer);
+      newWhaleRouter = NewWhaleRouter__factory.connect("0xA534A17c1ABCE1119aA772451DcA249352aCB9a0", signer);
     }
 
     const klayToUsdt: INewWhaleRouter.SwapRouteStruct = {
@@ -131,10 +131,10 @@ task("deploy:NewWhaleRouter")
       value: one,
       gasLimit: 1000000,
     });
-    await newWhaleRouter.callStatic.swapToken(one, 0, daiToUsdt, signer.address, signer.address, 1658993149000, {
-      value: one,
-      gasLimit: 1000000,
-    });
+    // await newWhaleRouter.callStatic.swapToken(one, 0, daiToUsdt, signer.address, signer.address, 1658993149000, {
+    //   value: one,
+    //   gasLimit: 1000000,
+    // });
     // const tx = await newWhaleRouter.swapToken(one, 0, x, signer.address, signer.address, 1658993149000, { value: one, gasLimit: 1000000 });
     // const r = await tx.wait();
     // console.log(r.transactionHash);
