@@ -241,13 +241,16 @@ contract Klayswap is Uni2 {
         address[] calldata path
     ) external override whenNotPaused returns (uint256 output) {
         address[] memory kspPath = _makeRoutePath(path);
-        output = this.getAmountsOut(amountIn, path)[path.length - 1];
+
+        // to reduce gas cost
+        // output = this.getAmountsOut(amountIn, path)[path.length - 1];
         IERC20(path[0]).safeTransferFrom(_msgSender(), address(this), amountIn);
 
         approveIfNeeded(path[0], amountIn);
 
         KSPHelper.CPMMRouter.exchangeKctPos(path[0], amountIn, path[path.length - 1], amountOutMin, kspPath);
 
+        output = IERC20(path[path.length - 1]).balanceOf(address(this));
         IERC20(path[path.length - 1]).uniTransfer(_msgSender(), output);
     }
 

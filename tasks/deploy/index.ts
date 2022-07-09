@@ -2,6 +2,7 @@ import "./claimswap";
 import "./definix";
 import "./eklipse";
 import "./i4i";
+import "./klayswap";
 import "./neuronswap";
 import "./newwhale";
 import "./paladex";
