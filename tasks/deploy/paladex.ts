@@ -10,7 +10,7 @@ import { Paladex__factory } from "../../src/types/factories/contracts/Uni2/Palad
 task("deploy:Paladex")
   .addFlag("deploy", "Whether deploy")
   .setAction(async function (taskArguments: TaskArguments, { ethers }) {
-    const [_a, _b, signer]: SignerWithAddress[] = await ethers.getSigners();
+    const [signer]: SignerWithAddress[] = await ethers.getSigners();
 
     let paladex: Paladex | undefined = undefined;
     if (taskArguments.deploy) {

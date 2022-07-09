@@ -10,7 +10,7 @@ import { Definix__factory } from "../../src/types/factories/contracts/Uni2/Defin
 task("deploy:Definix")
   .addFlag("deploy", "Whether deploy")
   .setAction(async function (taskArguments: TaskArguments, { ethers }) {
-    const [_a, _b, signer]: SignerWithAddress[] = await ethers.getSigners();
+    const [signer]: SignerWithAddress[] = await ethers.getSigners();
 
     let definix: Definix | undefined = undefined;
     if (taskArguments.deploy) {

@@ -10,7 +10,7 @@ import { Ufoswap__factory } from "../../src/types/factories/contracts/Uni2/Ufosw
 task("deploy:Ufoswap")
   .addFlag("deploy", "Whether deploy")
   .setAction(async function (taskArguments: TaskArguments, { ethers }) {
-    const [_a, _b, signer]: SignerWithAddress[] = await ethers.getSigners();
+    const [signer]: SignerWithAddress[] = await ethers.getSigners();
 
     let ufoswap: Ufoswap | undefined = undefined;
     if (taskArguments.deploy) {

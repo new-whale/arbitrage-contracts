@@ -10,7 +10,7 @@ import { Claimswap__factory } from "../../src/types/factories/contracts/Uni2/Cla
 task("deploy:Claimswap")
   .addFlag("deploy", "Whether deploy")
   .setAction(async function (taskArguments: TaskArguments, { ethers }) {
-    const [_a, _b, signer]: SignerWithAddress[] = await ethers.getSigners();
+    const [signer]: SignerWithAddress[] = await ethers.getSigners();
 
     let claimswap: Claimswap | undefined = undefined;
     if (taskArguments.deploy) {

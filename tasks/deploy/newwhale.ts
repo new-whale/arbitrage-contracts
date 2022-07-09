@@ -58,7 +58,7 @@ const allRouters = [
 task("deploy:NewWhaleRouter")
   .addFlag("deploy", "Whether deploy")
   .setAction(async function (taskArguments: TaskArguments, { ethers }) {
-    const [_a, _b, signer]: SignerWithAddress[] = await ethers.getSigners();
+    const [signer]: SignerWithAddress[] = await ethers.getSigners();
 
     console.log(`Signer ${signer.address}`);
     let newWhaleRouter: NewWhaleRouter | undefined = undefined;
