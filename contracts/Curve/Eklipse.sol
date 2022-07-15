@@ -354,7 +354,7 @@ contract Eklipse is Curve {
             IEklipsePool WPool = IEklipsePool(_pools.pools.at(i));
 
             tokenNums[i] = WPool.getNumberOfTokens();
-            tokenNum += tokenNums[i];
+            tokenNum += tokenNums[i] + 1;
         }
 
         dictTokenInfo memory tokenInfoDicts;
@@ -368,24 +368,25 @@ contract Eklipse is Curve {
             IEklipsePool WPool = IEklipsePool(_pools.pools.at(i));
             address[] memory tokens = WPool.getTokens();
 
-            for (uint256 j; j < tokens.length; j++) {
-                if (tokens[j] != address(0)) {
+            for (uint256 j; j <= tokens.length; j++) {
+                address token = j < tokens.length ? tokens[j] : WPool.getLpToken();
+                if (token != address(0)) {
                     uint16 flag;
                     for (uint256 k; k < tokenPointer; k++) {
-                        if (tokenInfoDicts.key[k] == tokens[j]) {
+                        if (tokenInfoDicts.key[k] == token) {
                             flag = flag + tokenInfoDicts.flag[j];
                         }
                         if (flag == 1) break;
                     }
                     if (flag == 0) {
-                        tokenInfoDicts.key[tokenPointer + j] = tokens[j];
+                        tokenInfoDicts.key[tokenPointer + j] = token;
                         tokenInfoDicts.flag[tokenPointer + j] = 1;
-                        tokenInfoDicts.tokenInfo[tokenPointer + j] = this.tokenInfo(tokens[j]);
+                        tokenInfoDicts.tokenInfo[tokenPointer + j] = this.tokenInfo(token);
                         validTokenNum = validTokenNum + 1;
                     }
                 }
             }
-            tokenPointer += tokenNums[i];
+            tokenPointer += tokenNums[i] + 1;
         }
 
         ITokenViewer[] memory Tokens = new ITokenViewer[](validTokenNum);

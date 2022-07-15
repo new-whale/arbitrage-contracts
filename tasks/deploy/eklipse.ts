@@ -16,7 +16,7 @@ task("deploy:Eklipse")
       eklipse = await eklipseFactory.connect(signer).deploy();
       await eklipse.deployed();
     } else {
-      eklipse = Eklipse__factory.connect("0x78d77d2397E6420304B347B5288558eD45EF67D8", signer);
+      eklipse = Eklipse__factory.connect("0x5764789cc20E5f05953b8E59055a7714a7d540D4", signer);
     }
     console.log("Contract address: ", eklipse.address);
     const [poolInfos, n] = await eklipse.poolInfos();

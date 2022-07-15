@@ -397,10 +397,15 @@ contract I4i is Curve {
 
     function tokenInfos() external view override returns (ITokenViewer[] memory) {
         address[] memory tokens = IPoolRegistry(I4iHelper.poolRegistry).getCoinList();
-        ITokenViewer[] memory Tokens = new ITokenViewer[](tokens.length);
+        uint256 poolLength = this.poolNum();
+        ITokenViewer[] memory Tokens = new ITokenViewer[](tokens.length + poolLength);
 
         for (uint256 i; i < tokens.length; i++) {
             Tokens[i] = this.tokenInfo(tokens[i]);
+        }
+        for (uint256 i; i < poolLength; i++) {
+            address lp = this.poolInfo(IPoolRegistry(I4iHelper.poolRegistry).poolList(i)).lpToken;
+            Tokens[tokens.length + i] = this.tokenInfo(lp);
         }
         return Tokens;
     }

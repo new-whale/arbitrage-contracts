@@ -44,12 +44,12 @@ const allRouters = [
     Type: 0,
   },
   {
-    Address: "0xB9146A0B053B1C69815f21D580867F175a62F8c1",
+    Address: "0x03de7AF29dFD6ac5Bf57A4ad3F985E455f3115aC",
     Name: "I4i",
     Type: 1,
   },
   {
-    Address: "0x78d77d2397E6420304B347B5288558eD45EF67D8",
+    Address: "0x5764789cc20E5f05953b8E59055a7714a7d540D4",
     Name: "Eklipse",
     Type: 1,
   },
@@ -73,6 +73,7 @@ task("deploy:NewWhaleRouter")
     } else {
       newWhaleRouter = NewWhaleRouter__factory.connect("0xA534A17c1ABCE1119aA772451DcA249352aCB9a0", signer);
     }
+    console.log(`Contract address: ${newWhaleRouter.address}`);
 
     const klayToUsdt: INewWhaleRouter.SwapRouteStruct = {
       routes: [
@@ -124,10 +125,8 @@ task("deploy:NewWhaleRouter")
       ],
     };
 
-    console.log(`Contract address: ${newWhaleRouter.address}`);
-
-    const one = BigNumber.from("1000000000000000000");
-    await newWhaleRouter.callStatic.swapToken(one, 0, klayToUsdt, signer.address, signer.address, 1658993149000, {
+    const one = BigNumber.from("10000000000000000");
+    await newWhaleRouter.swapToken(one, 0, klayToUsdt, signer.address, signer.address, 1658993149000, {
       value: one,
       gasLimit: 1000000,
     });

@@ -16,7 +16,7 @@ task("deploy:I4i")
       i4i = await i4iFactory.connect(signer).deploy();
       await i4i.deployed();
     } else {
-      i4i = I4i__factory.connect("0xB9146A0B053B1C69815f21D580867F175a62F8c1", signer);
+      i4i = I4i__factory.connect("0x03de7AF29dFD6ac5Bf57A4ad3F985E455f3115aC", signer);
     }
     console.log("Contract address: ", i4i.address);
     const [poolInfos, n] = await i4i.poolInfos();
