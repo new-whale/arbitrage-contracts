@@ -3,6 +3,7 @@ import "./definix";
 import "./eklipse";
 import "./i4i";
 import "./klayswap";
+import "./liquidity-hunter";
 import "./neuronswap";
 import "./newwhale";
 import "./paladex";

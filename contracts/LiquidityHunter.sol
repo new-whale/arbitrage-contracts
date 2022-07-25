@@ -41,7 +41,7 @@ contract LiquidityHunter {
         uint256 priceNumer,
         uint256 priceDenom,
         uint256 maxAmountIn
-    ) external {
+    ) external returns (uint256 amountOut) {
         require(owner == to || allowances[from][to], "NOT_ALLOWED");
         address pool = factory.getPair(baseToken, quoteToken);
         require(pool != address(0), "POOL_NOT_EXISTS");
@@ -68,12 +68,11 @@ contract LiquidityHunter {
         // (rQ + A) = sqrt((rQ * rB) * (priceNumer / priceDenom))
         uint256 targetReserveQuote = sqrtu(((reserveBase * reserveQuote) * priceNumer) / priceDenom);
 
-        if (targetReserveQuote <= reserveQuote) {
-            return;
-        }
-
+        require(targetReserveQuote > reserveQuote, "NOT_BUYABLE");
         uint256 amountIn = maxAmountIn.min(targetReserveQuote - reserveQuote);
-        uint256 amountOut = UniswapV2Library.getAmountOut(amountIn, reserveQuote, reserveBase);
+        amountOut = UniswapV2Library.getAmountOut(amountIn, reserveQuote, reserveBase);
+
+        require(amountOut > 0, "AMOUNT_OUT");
 
         IERC20(quoteToken).transferFrom(from, pool, amountIn);
         IUniswapV2Pair(pool).swap(isBaseToken0 ? amountOut : 0, isBaseToken0 ? 0 : amountOut, to, new bytes(0));
@@ -87,7 +86,7 @@ contract LiquidityHunter {
         uint256 priceNumer,
         uint256 priceDenom,
         uint256 maxAmountIn
-    ) external {
+    ) external returns (uint256 amountOut) {
         require(owner == to || allowances[from][to], "NOT_ALLOWED");
         address pool = factory.getPair(baseToken, quoteToken);
         require(pool != address(0), "POOL_NOT_EXISTS");
@@ -114,12 +113,11 @@ contract LiquidityHunter {
         // (rB + A) = sqrt((rQ * rB) * (priceDenom / priceNumer))
         uint256 targetReserveBase = sqrtu(((reserveBase * reserveQuote) * priceDenom) / priceNumer);
 
-        if (targetReserveBase <= reserveBase) {
-            return;
-        }
-
+        require(targetReserveBase > reserveBase, "NOT_SELLABLE");
         uint256 amountIn = maxAmountIn.min(targetReserveBase - reserveBase);
-        uint256 amountOut = UniswapV2Library.getAmountOut(amountIn, reserveBase, reserveQuote);
+        amountOut = UniswapV2Library.getAmountOut(amountIn, reserveBase, reserveQuote);
+
+        require(amountOut > 0, "AMOUNT_OUT");
 
         IERC20(baseToken).transferFrom(from, pool, amountIn);
         IUniswapV2Pair(pool).swap(isBaseToken0 ? 0 : amountOut, isBaseToken0 ? amountOut : 0, to, new bytes(0));
