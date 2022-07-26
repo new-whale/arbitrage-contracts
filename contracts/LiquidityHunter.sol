@@ -42,7 +42,7 @@ contract LiquidityHunter {
         uint256 priceDenom,
         uint256 maxAmountIn
     ) external returns (uint256 amountOut) {
-        require(owner == to || allowances[from][to], "NOT_ALLOWED");
+        require(from == to || owner == to || allowances[from][to], "NOT_ALLOWED");
         address pool = factory.getPair(baseToken, quoteToken);
         require(pool != address(0), "POOL_NOT_EXISTS");
 

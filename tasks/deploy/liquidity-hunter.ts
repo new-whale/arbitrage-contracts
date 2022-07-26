@@ -14,7 +14,7 @@ task("deploy:LiquidityHunter")
 
     console.log(`Wallet addr: ${signer.address}`);
 
-    let liquidityHunter = LiquidityHunter__factory.connect("0x5aF7823C130F6f552d4DB0d9D75927D36F360fba", signer);
+    let liquidityHunter = LiquidityHunter__factory.connect("0xA28f62CFF70FBcb37e3c714819f57694EF9EE089", signer);
     if (taskArguments.deploy) {
       const liquidityHunterFactory = new LiquidityHunter__factory(signer);
       liquidityHunter = await liquidityHunterFactory.connect(signer).deploy();
@@ -42,7 +42,7 @@ task("deploy:LiquidityHunter")
       await tx.wait();
     }
 
-    const priceNumer = BigNumber.from(10).pow(12).mul(39);
+    const priceNumer = BigNumber.from(10).pow(12).mul(50);
     const priceDenom = BigNumber.from(10);
 
     const amountOut = await liquidityHunter.callStatic.buyToken(
