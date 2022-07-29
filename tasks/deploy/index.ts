@@ -4,6 +4,7 @@ import "./eklipse";
 import "./i4i";
 import "./klayswap";
 import "./liquidity-hunter";
+import "./liquidity-hunter-ksp";
 import "./neuronswap";
 import "./newwhale";
 import "./paladex";
