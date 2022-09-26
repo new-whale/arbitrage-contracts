@@ -89,9 +89,7 @@ contract LiquidityHunterKsp {
         address pool = ksp.tokenToPool(baseToken, quoteToken);
         require(ksp.poolExist(pool), "POOL_NOT_EXISTS");
 
-        if (maxAmountIn == 0) {
-            maxAmountIn = IERC20(quoteToken).balanceOf(from);
-        }
+        maxAmountIn = IERC20(quoteToken).balanceOf(from);
 
         // Buy scenario
         // Initial balance: reserveQuote(=rQ), reserveBase(=rB)
@@ -110,6 +108,8 @@ contract LiquidityHunterKsp {
 
                 (reserveBase, reserveQuote) = isBaseToken0 ? (reserve0, reserve1) : (reserve1, reserve0);
             }
+
+            require(reserveQuote > 10000000000, "TOO_SMALL");
 
             uint256 targetReserveQuote = sqrtu(((reserveBase * reserveQuote) * priceNumer) / priceDenom);
 
