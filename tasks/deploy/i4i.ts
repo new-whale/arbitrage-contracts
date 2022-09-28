@@ -1,12 +1,12 @@
-import type { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import { task } from "hardhat/config";
-import type { TaskArguments } from "hardhat/types";
+import type { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { task } from 'hardhat/config';
+import type { TaskArguments } from 'hardhat/types';
 
-import type { I4i } from "../../src/types/contracts/Curve/I4i.sol/I4i";
-import { I4i__factory } from "../../src/types/factories/contracts/Curve/I4i.sol/I4i__factory";
+import type { I4i } from '../../src/types/contracts/Curve/I4i.sol/I4i';
+import { I4i__factory } from '../../src/types/factories/contracts/Curve/I4i.sol/I4i__factory';
 
-task("deploy:I4i")
-  .addFlag("deploy", "Whether deploy")
+task('deploy:I4i')
+  .addFlag('deploy', 'Whether deploy')
   .setAction(async function (taskArguments: TaskArguments, { ethers }) {
     const [signer]: Array<SignerWithAddress> = await ethers.getSigners();
 
@@ -15,10 +15,11 @@ task("deploy:I4i")
       const i4iFactory = new I4i__factory(signer);
       i4i = await i4iFactory.connect(signer).deploy();
       await i4i.deployed();
-    } else {
-      i4i = I4i__factory.connect("0x03de7AF29dFD6ac5Bf57A4ad3F985E455f3115aC", signer);
     }
-    console.log("Contract address: ", i4i.address);
+    else {
+      i4i = I4i__factory.connect('0x03de7AF29dFD6ac5Bf57A4ad3F985E455f3115aC', signer);
+    }
+    console.log('Contract address: ', i4i.address);
     const [poolInfos, n] = await i4i.poolInfos();
-    console.log("TokenInfos: ", poolInfos.slice(0, 10));
+    console.log('TokenInfos: ', poolInfos.slice(0, 10));
   });
