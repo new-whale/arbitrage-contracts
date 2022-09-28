@@ -10,7 +10,7 @@ import { Ufoswap__factory } from "../../src/types/factories/contracts/Uni2/Ufosw
 task("deploy:Ufoswap")
   .addFlag("deploy", "Whether deploy")
   .setAction(async function (taskArguments: TaskArguments, { ethers }) {
-    const [signer]: SignerWithAddress[] = await ethers.getSigners();
+    const [signer]: Array<SignerWithAddress> = await ethers.getSigners();
 
     let ufoswap: Ufoswap | undefined = undefined;
     if (taskArguments.deploy) {
@@ -26,7 +26,9 @@ task("deploy:Ufoswap")
     const amount = 10000;
     const value = BigNumber.from("1000000000000000000");
 
-    const simRes = await ufoswap.callStatic.swapExactKlay(10, [klay, ousdt], { value });
+    const simRes = await ufoswap.callStatic.swapExactKlay(10, [klay, ousdt], {
+      value,
+    });
     console.log(`Simulation result: ${simRes}`);
 
     const path = [ousdt, klay];
@@ -36,10 +38,10 @@ task("deploy:Ufoswap")
     const srcToken = IERC20__factory.connect(path[0], signer);
     const allowance = await srcToken.allowance(signer.address, ufoswap.address);
     if (allowance.lt(amount)) {
-      console.log(`Get approved`);
+      console.log("Get approved");
       await (await srcToken.approve(ufoswap.address, amount)).wait();
     } else {
-      console.log(`No approve needed`);
+      console.log("No approve needed");
     }
     const newAllowance = await srcToken.allowance(signer.address, ufoswap.address);
     console.log(`Allowance ${signer.address}, ${ufoswap.address}: ${newAllowance}`);

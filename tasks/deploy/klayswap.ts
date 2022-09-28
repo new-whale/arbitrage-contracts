@@ -10,7 +10,7 @@ import { Klayswap__factory } from "../../src/types/factories/contracts/Uni2/Klay
 task("deploy:Klayswap")
   .addFlag("deploy", "Whether deploy")
   .setAction(async function (taskArguments: TaskArguments, { ethers }) {
-    const [signer]: SignerWithAddress[] = await ethers.getSigners();
+    const [signer]: Array<SignerWithAddress> = await ethers.getSigners();
 
     console.log(`Wallet addr: ${signer.address}`);
 
@@ -27,7 +27,9 @@ task("deploy:Klayswap")
     const amount = 10000;
     const value = BigNumber.from("1000000000000000000");
 
-    const simRes = await klayswap.swapExactKlay(10, [klay, ousdt], { value });
+    const simRes = await klayswap.swapExactKlay(10, [klay, ousdt], {
+      value,
+    });
     console.log(`Simulation result: ${simRes}`);
 
     return;
@@ -39,10 +41,10 @@ task("deploy:Klayswap")
     const srcToken = IERC20__factory.connect(path[0], signer);
     const allowance = await srcToken.allowance(signer.address, klayswap.address);
     if (allowance.lt(amount)) {
-      console.log(`Get approved`);
+      console.log("Get approved");
       await (await srcToken.approve(klayswap.address, amount)).wait();
     } else {
-      console.log(`No approve needed`);
+      console.log("No approve needed");
     }
     const newAllowance = await srcToken.allowance(signer.address, klayswap.address);
     console.log(`Allowance ${signer.address}, ${klayswap.address}: ${newAllowance}`);

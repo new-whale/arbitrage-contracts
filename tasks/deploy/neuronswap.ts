@@ -10,7 +10,7 @@ import { Neuronswap__factory } from "../../src/types/factories/contracts/Uni2/Ne
 task("deploy:Neuronswap")
   .addFlag("deploy", "Whether deploy")
   .setAction(async function (taskArguments: TaskArguments, { ethers }) {
-    const [signer]: SignerWithAddress[] = await ethers.getSigners();
+    const [signer]: Array<SignerWithAddress> = await ethers.getSigners();
 
     let neuronswap: Neuronswap | undefined = undefined;
     if (taskArguments.deploy) {
@@ -26,7 +26,9 @@ task("deploy:Neuronswap")
     const amount = BigNumber.from("1000000000000000000");
     const value = BigNumber.from("1000000000000000000");
 
-    const simRes = await neuronswap.callStatic.swapExactKlay(10, [klay, nr], { value });
+    const simRes = await neuronswap.callStatic.swapExactKlay(10, [klay, nr], {
+      value,
+    });
     console.log(`Simulation result: ${simRes}`);
 
     const path = [nr, klay];
@@ -36,10 +38,10 @@ task("deploy:Neuronswap")
     const srcToken = IERC20__factory.connect(path[0], signer);
     const allowance = await srcToken.allowance(signer.address, neuronswap.address);
     if (allowance.lt(amount)) {
-      console.log(`Get approved`);
+      console.log("Get approved");
       await (await srcToken.approve(neuronswap.address, amount)).wait();
     } else {
-      console.log(`No approve needed`);
+      console.log("No approve needed");
     }
     const newAllowance = await srcToken.allowance(signer.address, neuronswap.address);
     console.log(`Allowance ${signer.address}, ${neuronswap.address}: ${newAllowance}`);

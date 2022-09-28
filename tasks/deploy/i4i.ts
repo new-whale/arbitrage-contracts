@@ -8,7 +8,7 @@ import { I4i__factory } from "../../src/types/factories/contracts/Curve/I4i.sol/
 task("deploy:I4i")
   .addFlag("deploy", "Whether deploy")
   .setAction(async function (taskArguments: TaskArguments, { ethers }) {
-    const [signer]: SignerWithAddress[] = await ethers.getSigners();
+    const [signer]: Array<SignerWithAddress> = await ethers.getSigners();
 
     let i4i: I4i | undefined = undefined;
     if (taskArguments.deploy) {

@@ -10,7 +10,7 @@ import { Claimswap__factory } from "../../src/types/factories/contracts/Uni2/Cla
 task("deploy:Claimswap")
   .addFlag("deploy", "Whether deploy")
   .setAction(async function (taskArguments: TaskArguments, { ethers }) {
-    const [signer]: SignerWithAddress[] = await ethers.getSigners();
+    const [signer]: Array<SignerWithAddress> = await ethers.getSigners();
 
     console.log(`Wallet addr: ${signer.address}`);
 
@@ -27,7 +27,9 @@ task("deploy:Claimswap")
     const amount = 10000;
     const value = BigNumber.from("1000000000000000000");
 
-    const simRes = await claimswap.callStatic.swapExactKlay(10, [klay, ousdt], { value });
+    const simRes = await claimswap.callStatic.swapExactKlay(10, [klay, ousdt], {
+      value,
+    });
     console.log(`Simulation result: ${simRes}`);
 
     const path = [ousdt, klay];
@@ -37,10 +39,10 @@ task("deploy:Claimswap")
     const srcToken = IERC20__factory.connect(path[0], signer);
     const allowance = await srcToken.allowance(signer.address, claimswap.address);
     if (allowance.lt(amount)) {
-      console.log(`Get approved`);
+      console.log("Get approved");
       await (await srcToken.approve(claimswap.address, amount)).wait();
     } else {
-      console.log(`No approve needed`);
+      console.log("No approve needed");
     }
     const newAllowance = await srcToken.allowance(signer.address, claimswap.address);
     console.log(`Allowance ${signer.address}, ${claimswap.address}: ${newAllowance}`);

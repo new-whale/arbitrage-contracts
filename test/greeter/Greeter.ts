@@ -10,7 +10,7 @@ describe("Unit tests", function () {
   before(async function () {
     this.signers = {} as Signers;
 
-    const signers: SignerWithAddress[] = await ethers.getSigners();
+    const signers: Array<SignerWithAddress> = await ethers.getSigners();
     this.signers.admin = signers[0];
   });
 

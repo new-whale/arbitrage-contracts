@@ -8,7 +8,7 @@ import { Eklipse__factory } from "../../src/types/factories/contracts/Curve/Ekli
 task("deploy:Eklipse")
   .addFlag("deploy", "Whether deploy")
   .setAction(async function (taskArguments: TaskArguments, { ethers }) {
-    const [signer]: SignerWithAddress[] = await ethers.getSigners();
+    const [signer]: Array<SignerWithAddress> = await ethers.getSigners();
 
     let eklipse: Eklipse | undefined = undefined;
     if (taskArguments.deploy) {
