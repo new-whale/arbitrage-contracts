@@ -1,58 +1,60 @@
-import "@nomiclabs/hardhat-etherscan";
-import "@nomiclabs/hardhat-waffle";
-import "@typechain/hardhat";
-import { config as dotenvConfig } from "dotenv";
-import "hardhat-gas-reporter";
-import { HardhatUserConfig } from "hardhat/config";
-import { NetworkUserConfig } from "hardhat/types";
-import { resolve } from "path";
-import "solidity-coverage";
+import '@nomiclabs/hardhat-etherscan';
+import '@nomiclabs/hardhat-waffle';
+import '@typechain/hardhat';
+import { config as dotenvConfig } from 'dotenv';
+import 'hardhat-gas-reporter';
+import { HardhatUserConfig } from 'hardhat/config';
+import { NetworkUserConfig } from 'hardhat/types';
+import { resolve } from 'path';
+import 'solidity-coverage';
 
-import "./tasks/accounts";
-import "./tasks/deploy";
+import './tasks/accounts';
+import './tasks/deploy';
 
-dotenvConfig({ path: resolve(__dirname, "./.env") });
+dotenvConfig({
+  path: resolve(__dirname, './.env'),
+});
 
 // Ensure that we have all the environment variables we need.
 const mnemonic: string | undefined = process.env.MNEMONIC;
 if (!mnemonic) {
-  throw new Error("Please set your MNEMONIC in a .env file");
+  throw new Error('Please set your MNEMONIC in a .env file');
 }
 
 const infuraApiKey: string | undefined = process.env.INFURA_API_KEY;
 if (!infuraApiKey) {
-  throw new Error("Please set your INFURA_API_KEY in a .env file");
+  throw new Error('Please set your INFURA_API_KEY in a .env file');
 }
 
 const chainIds = {
-  "arbitrum-mainnet": 42161,
+  'arbitrum-mainnet': 42161,
   avalanche: 43114,
   bsc: 56,
   hardhat: 31337,
   mainnet: 1,
-  "optimism-mainnet": 10,
-  "polygon-mainnet": 137,
-  "polygon-mumbai": 80001,
+  'optimism-mainnet': 10,
+  'polygon-mainnet': 137,
+  'polygon-mumbai': 80001,
   rinkeby: 4,
 };
 
 function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
   let jsonRpcUrl: string;
   switch (chain) {
-    case "avalanche":
-      jsonRpcUrl = "https://api.avax.network/ext/bc/C/rpc";
+    case 'avalanche':
+      jsonRpcUrl = 'https://api.avax.network/ext/bc/C/rpc';
       break;
-    case "bsc":
-      jsonRpcUrl = "https://bsc-dataseed1.binance.org";
+    case 'bsc':
+      jsonRpcUrl = 'https://bsc-dataseed1.binance.org';
       break;
     default:
-      jsonRpcUrl = "https://" + chain + ".infura.io/v3/" + infuraApiKey;
+      jsonRpcUrl = `https://${chain}.infura.io/v3/${infuraApiKey}`;
   }
   return {
     accounts: {
       count: 10,
       mnemonic,
-      path: "m/44'/60'/0'/0",
+      path: 'm/44\'/60\'/0\'/0',
     },
     chainId: chainIds[chain],
     url: jsonRpcUrl,
@@ -60,7 +62,7 @@ function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
 }
 
 const config: HardhatUserConfig = {
-  defaultNetwork: "hardhat",
+  defaultNetwork: 'hardhat',
   etherscan: {
     apiKey: {
       arbitrumOne: process.env.ARBISCAN_API_KEY,
@@ -74,10 +76,10 @@ const config: HardhatUserConfig = {
     },
   },
   gasReporter: {
-    currency: "USD",
+    currency: 'USD',
     enabled: process.env.REPORT_GAS ? true : false,
     excludeContracts: [],
-    src: "./contracts",
+    src: './contracts',
   },
   networks: {
     hardhat: {
@@ -86,56 +88,57 @@ const config: HardhatUserConfig = {
       },
       chainId: chainIds.hardhat,
     },
-    arbitrum: getChainConfig("arbitrum-mainnet"),
-    avalanche: getChainConfig("avalanche"),
-    bsc: getChainConfig("bsc"),
-    mainnet: getChainConfig("mainnet"),
-    optimism: getChainConfig("optimism-mainnet"),
-    "polygon-mainnet": getChainConfig("polygon-mainnet"),
-    "polygon-mumbai": getChainConfig("polygon-mumbai"),
-    rinkeby: getChainConfig("rinkeby"),
+    arbitrum: getChainConfig('arbitrum-mainnet'),
+    avalanche: getChainConfig('avalanche'),
+    bsc: getChainConfig('bsc'),
+    mainnet: getChainConfig('mainnet'),
+    optimism: getChainConfig('optimism-mainnet'),
+    'polygon-mainnet': getChainConfig('polygon-mainnet'),
+    'polygon-mumbai': getChainConfig('polygon-mumbai'),
+    rinkeby: getChainConfig('rinkeby'),
     klaytn: {
-      url: "https://klaytn-en.sixnetwork.io:8651/",
+      url: 'https://klaytn-en.sixnetwork.io:8651/',
       // url: "https://public-node-api.klaytnapi.com/v1/cypress",
       gasPrice: 250000000000,
       accounts: {
         count: 10,
         mnemonic,
-        path: "m/44'/60'/0'/0",
+        path: 'm/44\'/60\'/0\'/0',
       },
     },
   },
   paths: {
-    artifacts: "./artifacts",
-    cache: "./cache",
-    sources: "./contracts",
-    tests: "./test",
+    artifacts: './artifacts',
+    cache: './cache',
+    sources: './contracts',
+    tests: './test',
   },
   solidity: {
     compilers: [
       {
-        version: "0.8.13",
+        version: '0.8.15',
         settings: {
           metadata: {
             // Not including the metadata hash
-            // https://github.com/paulrberg/solidity-template/issues/31
-            bytecodeHash: "none",
+            // https://github.com/paulrberg/hardhat-template/issues/31
+            bytecodeHash: 'none',
           },
           // Disable the optimizer when debugging
           // https://hardhat.org/hardhat-network/#solidity-optimizer-support
           optimizer: {
             enabled: true,
-            runs: 800,
+            runs: 10000,
           },
+          viaIR: true,
         },
       },
       {
-        version: "0.8.7",
+        version: '0.8.7',
         settings: {
           metadata: {
             // Not including the metadata hash
             // https://github.com/paulrberg/solidity-template/issues/31
-            bytecodeHash: "none",
+            bytecodeHash: 'none',
           },
           // Disable the optimizer when debugging
           // https://hardhat.org/hardhat-network/#solidity-optimizer-support
@@ -148,8 +151,8 @@ const config: HardhatUserConfig = {
     ],
   },
   typechain: {
-    outDir: "src/types",
-    target: "ethers-v5",
+    outDir: 'src/types',
+    target: 'ethers-v5',
   },
 };
 
