@@ -64,5 +64,8 @@ export function fetchUniV2Viewer(): void {
   it('UniV2 fetch pool info of WMATIC-USDC', async function () {
     const len = await this.uniV2Viewer.allPairsLength('0x3679c3766E70133Ee4A7eb76031E49d3d1f2B50c');
     console.log('Pool num: ', len);
+
+    const pool = await this.uniV2Viewer.getPoolInfo('0x9ddcBC22bEB97899B5ceDCAbbA50A98314c3bAC1');
+    console.log('Pool: ', pool);
   });
 }

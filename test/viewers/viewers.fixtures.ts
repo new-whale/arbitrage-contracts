@@ -34,6 +34,7 @@ export async function deployViewersFixture(): Promise<{
   const uniV2ViewerFactory: UniV2Viewer__factory = new UniV2Viewer__factory(signer);
   const uniV2Viewer: UniV2Viewer = await uniV2ViewerFactory.deploy(['0x3679c3766E70133Ee4A7eb76031E49d3d1f2B50c'], [3000]);
   await uniV2Viewer.deployed();
+  console.log('UniV2Viewer: ', uniV2Viewer.address);
 
   return {
     uniV2Viewer,
