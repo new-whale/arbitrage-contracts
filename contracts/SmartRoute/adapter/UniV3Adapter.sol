@@ -48,7 +48,7 @@ contract UniV3Adapter is IRouterAdapter, IUniswapV3SwapCallback {
         address token0,
         address token1,
         uint24 fee
-    ) internal view returns (address pool) {
+    ) internal pure returns (address pool) {
         require(token0 < token1);
         pool = address(
             uint160(

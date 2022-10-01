@@ -10,16 +10,13 @@ import "./intf/ITokenInfoViewer.sol";
 import "hardhat/console.sol";
 
 contract TokenViewer is ITokenInfoViewer {
-    function tokenInfo(address token) public view virtual override returns (TokenInfo memory) {
-        TokenInfo memory tokenInfo;
-
+    function tokenInfo(address token) public view virtual override returns (TokenInfo memory info) {
         /*
          * @dev: some token in the pair does not support those metadata fetch, so it is included in try catch statement
          */
         try this.getTokenMetadata(token) returns (uint8 decimals, string memory name, string memory symbol) {
-            tokenInfo = TokenInfo(token, decimals, name, symbol);
+            info = TokenInfo(token, decimals, name, symbol);
         } catch {}
-        return tokenInfo;
     }
 
     function getTokenMetadata(address token)

@@ -91,7 +91,7 @@ const config: HardhatUserConfig = {
 
         enabled: true,
         url: 'https://klaytn-en.sixnetwork.io:8651/',
-        blockNumber: 102699036,
+        // blockNumber: 102702276,
       },
     },
     arbitrum: getChainConfig('arbitrum-mainnet'),
@@ -104,8 +104,9 @@ const config: HardhatUserConfig = {
     rinkeby: getChainConfig('rinkeby'),
     klaytn: {
       url: 'https://klaytn-en.sixnetwork.io:8651/',
-      // url: "https://public-node-api.klaytnapi.com/v1/cypress",
-      gasPrice: 25000000000,
+      // url: 'http://18.180.66.153:32333',
+      // url: 'https://public-node-api.klaytnapi.com/v1/cypress',
+      // gasPrice: 25000000000,
       accounts: {
         count: 10,
         mnemonic,
