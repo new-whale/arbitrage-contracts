@@ -20,8 +20,9 @@ contract BalancerAdapter is IRouterAdapter {
         address fromToken,
         uint256 amountIn,
         address toToken,
-        address pool
+        bytes calldata moreInfo
     ) public override returns (uint256 _output) {
+        address pool = abi.decode(moreInfo, (address));
         bytes32 poolId = IBalancerPool(pool).getPoolId();
 
         console.log("In Balancer");
@@ -48,9 +49,10 @@ contract BalancerAdapter is IRouterAdapter {
         address fromToken,
         uint256 amountIn,
         address toToken,
-        address pool,
+        bytes calldata moreInfo,
         address to
     ) external payable override returns (uint256 _output) {
+        address pool = abi.decode(moreInfo, (address));
         IBalancerVault.SingleSwap memory singleswap;
         singleswap.poolId = IBalancerPool(pool).getPoolId();
         singleswap.kind = IBalancerVault.SwapKind.GIVEN_IN;

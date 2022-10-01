@@ -8,14 +8,14 @@ interface Routing {
         address fromToken,
         uint256 amountIn,
         address toToken,
-        address pool
+        bytes calldata moreInfo
     ) external returns (uint256 _output);
 
     function swapExactIn(
         address fromToken,
         uint256 amountIn,
         address toToken,
-        address pool,
+        bytes calldata moreInfo,
         address to
     ) external payable returns (uint256 _output);
 }

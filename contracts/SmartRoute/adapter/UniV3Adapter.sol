@@ -137,8 +137,9 @@ contract UniV3Adapter is IRouterAdapter, IUniswapV3SwapCallback {
         address fromToken,
         uint256 amountIn,
         address toToken,
-        address pool
+        bytes calldata moreInfo
     ) public override returns (uint256 _output) {
+        address pool = abi.decode(moreInfo, (address));
         require(amountIn > 0, "UniswapV3Library: INSUFFICIENT_INPUT_AMOUNT");
         address _fromToken;
         address _toToken;
@@ -176,9 +177,10 @@ contract UniV3Adapter is IRouterAdapter, IUniswapV3SwapCallback {
         address fromToken,
         uint256 amountIn,
         address toToken,
-        address pool,
+        bytes calldata moreInfo,
         address to
     ) external payable override returns (uint256 _output) {
+        address pool = abi.decode(moreInfo, (address));
         address _fromToken;
         address _toToken;
         if (fromToken == _ETH_ADDRESS_) {

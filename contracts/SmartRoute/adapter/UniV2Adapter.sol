@@ -25,8 +25,9 @@ contract UniV2Adapter is IRouterAdapter {
         address fromToken,
         uint256 amountIn,
         address toToken,
-        address pool
+        bytes calldata moreInfo
     ) public view override returns (uint256 _output) {
+        address pool = abi.decode(moreInfo, (address));
         require(amountIn > 0, "UniswapV2Library: INSUFFICIENT_INPUT_AMOUNT");
 
         (uint256 reserve0, uint256 reserve1, ) = IUniswapV2Pair(pool).getReserves();
@@ -45,34 +46,24 @@ contract UniV2Adapter is IRouterAdapter {
         } else {
             revert("invalid token pair");
         }
-        console.log("In UniV2");
-        console.log(fromToken);
-        console.log(toToken);
-        console.log(amountIn);
 
         uint32 fee = IUniswapV2Viewer(uni2Viewer).fee(pool);
 
-        if (fee % 1000 == 0) {
-            uint256 amountInWithFee = amountIn.mul(1000 - fee / 1000);
-            uint256 numerator = amountInWithFee.mul(reserveOutput);
-            uint256 denominator = reserveInput.mul(1000).add(amountInWithFee);
-            _output = numerator / denominator;
-        } else {
-            uint256 amountInWithFee = amountIn.mul(10000 - fee / 100);
-            uint256 numerator = amountInWithFee.mul(reserveOutput);
-            uint256 denominator = reserveInput.mul(10000).add(amountInWithFee);
-            _output = numerator / denominator;
-        }
+        uint256 amountInWithFee = amountIn.mul(10000 - fee / 100);
+        uint256 numerator = amountInWithFee.mul(reserveOutput);
+        uint256 denominator = reserveInput.mul(10000).add(amountInWithFee);
+        _output = numerator / denominator;
     }
 
     function swapExactIn(
         address fromToken,
         uint256 amountIn,
         address toToken,
-        address pool,
+        bytes calldata moreInfo,
         address to
     ) external payable override returns (uint256 _output) {
-        _output = getAmountOut(fromToken, amountIn, toToken, pool);
+        address pool = abi.decode(moreInfo, (address));
+        _output = getAmountOut(fromToken, amountIn, toToken, moreInfo);
         (uint256 amount0Out, uint256 amount1Out) = fromToken == IUniswapV2Pair(pool).token0()
             ? (uint256(0), _output)
             : (_output, uint256(0));

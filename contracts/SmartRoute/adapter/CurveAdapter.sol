@@ -81,8 +81,9 @@ contract CurveAdapter is IRouterAdapter {
         address fromToken,
         uint256 amountIn,
         address toToken,
-        address pool
+        bytes calldata moreInfo
     ) public view override returns (uint256 _output) {
+        address pool = abi.decode(moreInfo, (address));
         console.log("In Curve");
         console.log(fromToken);
         console.log(toToken);
@@ -180,9 +181,10 @@ contract CurveAdapter is IRouterAdapter {
         address fromToken,
         uint256 amountIn,
         address toToken,
-        address pool,
+        bytes calldata moreInfo,
         address to
     ) external payable override returns (uint256 _output) {
+        address pool = abi.decode(moreInfo, (address));
         IERC20(fromToken).universalApproveMax(pool, amountIn);
         if (ICurveRegistry(registry).get_lp_token(pool) != address(0)) {
             _swapExactInCurve(registry, fromToken, amountIn, toToken, pool);

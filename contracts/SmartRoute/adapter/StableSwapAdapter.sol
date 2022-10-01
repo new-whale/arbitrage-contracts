@@ -32,8 +32,9 @@ contract StableSwapAdapter is IRouterAdapter {
         address fromToken,
         uint256 amountIn,
         address toToken,
-        address pool
+        bytes calldata moreInfo
     ) public view override returns (uint256 _output) {
+        address pool = abi.decode(moreInfo, (address));
         ISwap stableSwap = ISwap(pool);
         uint8 i;
         uint8 j;
@@ -63,9 +64,10 @@ contract StableSwapAdapter is IRouterAdapter {
         address fromToken,
         uint256 amountIn,
         address toToken,
-        address pool,
+        bytes calldata moreInfo,
         address to
     ) external payable override returns (uint256 _output) {
+        address pool = abi.decode(moreInfo, (address));
         IERC20(fromToken).universalApproveMax(pool, amountIn);
         ISwap stableSwap = ISwap(pool);
         uint8 i;
