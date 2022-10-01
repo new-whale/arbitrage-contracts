@@ -91,6 +91,7 @@ const config: HardhatUserConfig = {
 
         enabled: true,
         url: 'https://klaytn-en.sixnetwork.io:8651/',
+        blockNumber: 102699036,
       },
     },
     arbitrum: getChainConfig('arbitrum-mainnet'),
