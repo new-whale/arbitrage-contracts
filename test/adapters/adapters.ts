@@ -3,7 +3,7 @@ import type { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signe
 import { ethers } from 'hardhat';
 
 import type { Signers } from '../types';
-import { swapKlayswapAdapter } from './adapters.behavior';
+import { swapKlayswapAdapter, swapUniV2Adapter } from './adapters.behavior';
 import { deployAdaptersFixture } from './adapters.fixtures';
 
 describe('Unit tests', function () {
@@ -24,5 +24,6 @@ describe('Unit tests', function () {
     });
 
     swapKlayswapAdapter();
+    swapUniV2Adapter();
   });
 });
