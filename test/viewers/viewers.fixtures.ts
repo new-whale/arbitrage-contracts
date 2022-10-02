@@ -21,7 +21,7 @@ import {
 } from '../../src/types/factories/Viewer';
 
 export async function deployViewersFixture(): Promise<{
-  // balancerViewer: BalancerViewer;
+  balancerViewer: BalancerViewer;
   // curveViewer: CurveViewer;
   // curveCryptoViewer: CurveCryptoViewer;
   uniV2Viewer: UniV2Viewer;
@@ -40,7 +40,13 @@ export async function deployViewersFixture(): Promise<{
   await uniV2Viewer.deployed();
   console.log('UniV2Viewer: ', uniV2Viewer.address);
 
+  const balancerViewerFactory = new BalancerViewer__factory(signer);
+  const balancerViewer = await balancerViewerFactory.deploy();
+  await balancerViewer.deployed();
+  console.log('BalancerViewer: ', balancerViewer.address);
+
   return {
     uniV2Viewer,
+    balancerViewer,
   };
 }
