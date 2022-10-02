@@ -1,10 +1,12 @@
 import { ethers } from 'hardhat';
 import { config } from '../../config/klaytn_config';
 import type {
+  BalancerAdapter,
   KlayswapAdapter,
   UniV2Adapter,
 } from '../../src/types/SmartRoute/adapter';
 import {
+  BalancerAdapter__factory,
   KlayswapAdapter__factory,
   UniV2Adapter__factory,
 } from '../../src/types/factories/SmartRoute/adapter';
@@ -14,6 +16,7 @@ import { UniV2Viewer } from '../../src/types/Viewer';
 export async function deployAdaptersFixture(): Promise<{
   uniV2Adapter: UniV2Adapter;
   klayswapAdapter: KlayswapAdapter;
+  balancerAdapter: BalancerAdapter;
 }> {
   const [signer] = await ethers.getSigners();
 
@@ -33,8 +36,13 @@ export async function deployAdaptersFixture(): Promise<{
   const klayswapAdapter = await klayswapAdapterFactory.deploy(config.UniV2Factories.Klayswap[0] as string);
   await klayswapAdapter.deployed();
 
+  const balancerAdapterFactory = new BalancerAdapter__factory(signer);
+  const balancerAdapter = await balancerAdapterFactory.deploy();
+  await balancerAdapter.deployed();
+
   return {
     uniV2Adapter,
     klayswapAdapter,
+    balancerAdapter,
   };
 }

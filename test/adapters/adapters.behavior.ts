@@ -45,3 +45,26 @@ export function swapUniV2Adapter(): void {
     console.log('wklay:', ethers.utils.formatUnits(output, config.Tokens.KLAY.decimal));
   });
 }
+
+export function swapBalancerAdapter(): void {
+  it('swap 1 WKLAY -> oUSDT', async function () {
+    const abi = ethers.utils.defaultAbiCoder;
+
+    const ousdtOwner = await ethers.getImpersonatedSigner('0x96BEA8b38a8D558d598770A6babBfc78015823e3');
+    const pool = config.KlexPools[0];
+
+    const ousdt = IERC20__factory.connect(config.Tokens.oUSDT.address, ousdtOwner);
+    const amountIn = ethers.utils.parseUnits('1', config.Tokens.oUSDT.decimal);
+    await (await ousdt.transfer(this.balancerAdapter.address, amountIn)).wait();
+
+    const output = await this.balancerAdapter.callStatic.swapExactIn(
+      config.Tokens.oUSDT.address,
+      amountIn,
+      '0xe4f05A66Ec68B54A58B17c22107b02e0232cC817',
+      abi.encode(['address'], [pool]),
+      ousdtOwner.address,
+    );
+
+    console.log('wklay:', ethers.utils.formatUnits(output, config.Tokens.KLAY.decimal));
+  });
+}

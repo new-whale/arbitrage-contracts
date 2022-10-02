@@ -21,9 +21,8 @@ export function fetchUniV2Viewer(): void {
 
 export function fetchBalancerViewer(): void {
   it('Balancer fetch pool info', async function () {
-    const pool = '0x7ba1140505043000e291cafe6baf1ff6686d976f';
+    const pool = config.KlexPools[0];
     const info = await this.balancerViewer.getPoolInfo(pool);
 
-    console.log('Balancer pool: ', info);
   });
 }

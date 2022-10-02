@@ -10,6 +10,11 @@ const klaytn_config = {
     Roundrobin: ['0x01D43Af9c2A1e9c5D542c2299Fe5826A357Eb3fe', 3000, '0xF01f433268C277535743231C95c8e46783746D30'],
   },
 
+  KlexPools: [
+    '0x0e25fd48bcc65d0b0430386badb23c79eb295d28',
+    '0x7ba1140505043000e291cafe6baf1ff6686d976f',
+  ],
+
   //CurveRegistry
   CurveStableRegistry: '0x0000000000000000000000000000000000000000',
   CurveCryptoRegistry: '0x0000000000000000000000000000000000000000',
