@@ -3,6 +3,7 @@ import { ethers } from 'hardhat';
 
 import { config } from '../../config/klaytn_config';
 import { IERC20__factory } from '../../src/types/factories/intf';
+import { MultiAMMLib } from '../../src/types/SmartRoute/proxies/RouteProxy';
 
 export function swapKlayswapAdapter(): void {
   it('swap 1 KLAY -> kDAI -> MBX -> oUSDT', async function () {
@@ -97,5 +98,39 @@ export function swapBalancerAdapter(): void {
     );
 
     console.log('wklay:', ethers.utils.formatUnits(output, config.Tokens.KLAY.decimal));
+  });
+}
+
+export function swapRouteProxy(): void {
+  it('swap 1 KLAY -> oUSDT', async function () {
+    const abi = ethers.utils.defaultAbiCoder;
+
+    const klayOwner = await ethers.getImpersonatedSigner('0x96BEA8b38a8D558d598770A6babBfc78015823e3');
+
+    const swap1_step1: MultiAMMLib.SwapStruct = {
+      fromToken: config.Tokens.KLAY.address,
+      toToken: config.Tokens.oUSDT.address,
+      moreInfo: abi.encode(['address[]'], [[]]),
+      adapter: this.klayswapAdapter.address,
+      recipient: this.klayswapAdapter.address,
+    };
+
+    const output = await this.routeProxy.callStatic.splitSwap(
+      config.Tokens.KLAY.address,
+      ethers.utils.parseEther('1'),
+      config.Tokens.oUSDT.address,
+      klayOwner.address,
+      [1],
+      [
+        [swap1_step1],
+      ],
+      ethers.utils.parseUnits('0.1', config.Tokens.oUSDT.decimal),
+      '0xfffffffffffff',
+      {
+        value: ethers.utils.parseEther('1'),
+      },
+    );
+
+    console.log('oUSDT:', ethers.utils.formatUnits(output, config.Tokens.oUSDT.decimal));
   });
 }

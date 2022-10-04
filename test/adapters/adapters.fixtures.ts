@@ -14,12 +14,15 @@ import {
 } from '../../src/types/factories/SmartRoute/adapter';
 import { UniV2Viewer__factory } from '../../src/types/factories/Viewer';
 import { UniV2Viewer } from '../../src/types/Viewer';
+import { RouteProxy__factory } from '../../src/types/factories/SmartRoute/proxies';
+import { RouteProxy } from '../../src/types/SmartRoute/proxies';
 
 export async function deployAdaptersFixture(): Promise<{
   uniV2Adapter: UniV2Adapter;
   klayswapAdapter: KlayswapAdapter;
   isoAdapter: IsoAdapter;
   balancerAdapter: BalancerAdapter;
+  routeProxy: RouteProxy;
 }> {
   const [signer] = await ethers.getSigners();
 
@@ -47,10 +50,15 @@ export async function deployAdaptersFixture(): Promise<{
   const balancerAdapter = await balancerAdapterFactory.deploy();
   await balancerAdapter.deployed();
 
+  const routeProxyFactory = new RouteProxy__factory(signer);
+  const routeProxy = await routeProxyFactory.deploy();
+  await routeProxy.deployed();
+
   return {
     uniV2Adapter,
     klayswapAdapter,
     isoAdapter,
     balancerAdapter,
+    routeProxy,
   };
 }
