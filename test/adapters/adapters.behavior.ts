@@ -106,6 +106,7 @@ export function swapRouteProxy(): void {
     const abi = ethers.utils.defaultAbiCoder;
 
     const klayOwner = await ethers.getImpersonatedSigner('0x96BEA8b38a8D558d598770A6babBfc78015823e3');
+    const ousdt = IERC20__factory.connect(config.Tokens.oUSDT.address, klayOwner);
 
     const swap1_step1: MultiAMMLib.SwapStruct = {
       fromToken: config.Tokens.KLAY.address,
@@ -141,16 +142,15 @@ export function swapRouteProxy(): void {
 
     const swap1 = [swap1_step1, swap1_step2, swap1_step3, swap1_step4];
 
-    const output = await this.routeProxy.callStatic.splitSwap(
+    const beforeBalance = await ousdt.balanceOf(klayOwner.address);
+
+    const staticOutput = await this.routeProxy.callStatic.splitSwap(
       config.Tokens.KLAY.address,
       ethers.utils.parseEther('1'),
       config.Tokens.oUSDT.address,
       klayOwner.address,
-      [1, 1, 1, 1],
+      [1],
       [
-        swap1,
-        swap1,
-        swap1,
         swap1,
       ],
       ethers.utils.parseUnits('0.1', config.Tokens.oUSDT.decimal),
@@ -160,6 +160,38 @@ export function swapRouteProxy(): void {
       },
     );
 
-    console.log('oUSDT:', ethers.utils.formatUnits(output, config.Tokens.oUSDT.decimal));
+    const output = await this.routeProxy.callStatic.getSplitSwapOut(
+      config.Tokens.KLAY.address,
+      ethers.utils.parseEther('1'),
+      config.Tokens.oUSDT.address,
+      [1],
+      [
+        swap1,
+      ],
+    );
+
+    const tx = await this.routeProxy.splitSwap(
+      config.Tokens.KLAY.address,
+      ethers.utils.parseEther('1'),
+      config.Tokens.oUSDT.address,
+      klayOwner.address,
+      [1],
+      [
+        swap1,
+      ],
+      ethers.utils.parseUnits('0.1', config.Tokens.oUSDT.decimal),
+      '0xfffffffffffff',
+      {
+        value: ethers.utils.parseEther('1'),
+      },
+    );
+    await tx.wait();
+
+    const afterBalance = await ousdt.balanceOf(klayOwner.address);
+
+    // console.log('Before:', ethers.utils.formatUnits(beforeBalance, config.Tokens.oUSDT.decimal));
+    // console.log('After :', ethers.utils.formatUnits(afterBalance, config.Tokens.oUSDT.decimal));
+    expect(afterBalance.sub(beforeBalance)).be.equal(output);
+    expect(afterBalance.sub(beforeBalance)).be.equal(staticOutput);
   });
 }
