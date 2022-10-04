@@ -102,7 +102,7 @@ export function swapBalancerAdapter(): void {
 }
 
 export function swapRouteProxy(): void {
-  it('swap 1 KLAY -> oUSDT', async function () {
+  it('swap 1 KLAY -> oUSDT through RouteProxy', async function () {
     const abi = ethers.utils.defaultAbiCoder;
 
     const klayOwner = await ethers.getImpersonatedSigner('0x96BEA8b38a8D558d598770A6babBfc78015823e3');
@@ -115,14 +115,43 @@ export function swapRouteProxy(): void {
       recipient: this.klayswapAdapter.address,
     };
 
+    const swap1_step2: MultiAMMLib.SwapStruct = {
+      fromToken: config.Tokens.oUSDT.address,
+      toToken: config.UniV2Factories.Claimswap[2] as string,
+      moreInfo: abi.encode(['address'], ['0x5AD1139C1A45E6f881A30638F824EfE2176d3624']),
+      adapter: this.uniV2Adapter.address,
+      recipient: '0x5AD1139C1A45E6f881A30638F824EfE2176d3624',
+    };
+
+    const swap1_step3: MultiAMMLib.SwapStruct = {
+      fromToken: config.UniV2Factories.Claimswap[2] as string,
+      toToken: config.UniV2Factories.Definix[2] as string,
+      moreInfo: abi.encode([], []),
+      adapter: this.isoAdapter.address,
+      recipient: this.isoAdapter.address,
+    };
+
+    const swap1_step4: MultiAMMLib.SwapStruct = {
+      fromToken: config.UniV2Factories.Definix[2] as string,
+      toToken: config.Tokens.oUSDT.address,
+      moreInfo: abi.encode(['address'], ['0xcCCd396490e84823Ad17ab9781476a17150AD8e2']),
+      adapter: this.uniV2Adapter.address,
+      recipient: '0xcCCd396490e84823Ad17ab9781476a17150AD8e2',
+    };
+
+    const swap1 = [swap1_step1, swap1_step2, swap1_step3, swap1_step4];
+
     const output = await this.routeProxy.callStatic.splitSwap(
       config.Tokens.KLAY.address,
       ethers.utils.parseEther('1'),
       config.Tokens.oUSDT.address,
       klayOwner.address,
-      [1],
+      [1, 1, 1, 1],
       [
-        [swap1_step1],
+        swap1,
+        swap1,
+        swap1,
+        swap1,
       ],
       ethers.utils.parseUnits('0.1', config.Tokens.oUSDT.decimal),
       '0xfffffffffffff',
