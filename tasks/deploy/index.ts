@@ -1,1 +1,2 @@
+import './adapters';
 import './viewers';
