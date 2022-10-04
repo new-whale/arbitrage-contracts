@@ -179,7 +179,7 @@ contract UniV3Adapter is IRouterAdapter, IUniswapV3SwapCallback {
         address toToken,
         bytes calldata moreInfo,
         address to
-    ) external payable override returns (uint256 _output) {
+    ) external override returns (uint256 _output) {
         address pool = abi.decode(moreInfo, (address));
         address _fromToken;
         address _toToken;

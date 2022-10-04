@@ -17,7 +17,11 @@ interface Routing {
         address toToken,
         bytes calldata moreInfo,
         address to
-    ) external payable returns (uint256 _output);
+    ) external returns (uint256 _output);
 }
 
-abstract contract IRouterAdapter is ReentrancyGuard, Routing, Ownable {}
+abstract contract IRouterAdapter is ReentrancyGuard, Routing, Ownable {
+    receive() external payable {}
+
+    fallback() external payable {}
+}

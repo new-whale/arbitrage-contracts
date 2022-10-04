@@ -23,37 +23,9 @@ library MultiAMMLib {
     // 7: saddle
     struct Swap {
         address fromToken;
-        uint256 amountIn;
         address toToken;
-        address to;
-        address pool;
+        bytes moreInfo;
         address adapter;
-        uint16 poolEdition;
-    }
-
-    struct WeightedSwap {
-        address fromToken;
-        uint256 amountIn;
-        address toToken;
-        address to;
-        address[] pools;
-        uint256[] weights;
-        address[] adapters;
-        uint16[] poolEditions;
-    }
-
-    struct LinearWeightedSwap {
-        address fromToken;
-        uint256 amountIn;
-        address toToken;
-        address to;
-        uint256[] weights;
-        WeightedSwap[][] weightedSwaps;
-    }
-
-    struct FlashLoanDes {
-        address asset;
-        uint256 amountIn;
-        Swap[] swaps;
+        address recipient;
     }
 }

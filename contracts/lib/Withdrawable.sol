@@ -32,4 +32,16 @@ contract Withdrawable is Ownable {
         }
         emit LogWithdraw(msg.sender, _assetAddress, assetBalance);
     }
+
+    function withdrawAll(address[] calldata assets) public onlyOwner {
+      for(uint i; i < assets.length; i++) {
+        withdraw(assets[i]);
+      }
+    }
+
+    function deposit(address _assetAddress, uint256 amount) public payable {
+      if (_assetAddress != ETHER) {
+        IERC20(_assetAddress).safeTransferFrom(msg.sender, address(this), amount);
+      }
+    }
 }

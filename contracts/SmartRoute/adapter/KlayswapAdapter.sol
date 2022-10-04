@@ -43,7 +43,7 @@ contract KlayswapAdapter is IRouterAdapter {
         address toToken,
         bytes calldata moreInfo,
         address to
-    ) external payable override returns (uint256 _output) {
+    ) external override returns (uint256 _output) {
         address[] memory path = abi.decode(moreInfo, (address[]));
 
         if (fromToken == address(0)) {

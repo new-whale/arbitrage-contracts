@@ -41,7 +41,7 @@ contract StableSwapNoRegistryAdapter is IRouterAdapter {
         address toToken,
         bytes calldata moreInfo,
         address to
-    ) external payable override returns (uint256 _output) {
+    ) external override returns (uint256 _output) {
         address pool = abi.decode(moreInfo, (address));
         IERC20(fromToken).universalApproveMax(pool, amountIn);
         ISwap stableSwap = ISwap(pool);
