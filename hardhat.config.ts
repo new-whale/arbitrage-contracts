@@ -8,6 +8,7 @@ import { NetworkUserConfig } from 'hardhat/types';
 import { resolve } from 'path';
 import 'solidity-coverage';
 
+import './tasks/deploy';
 import './tasks/accounts';
 
 dotenvConfig({
