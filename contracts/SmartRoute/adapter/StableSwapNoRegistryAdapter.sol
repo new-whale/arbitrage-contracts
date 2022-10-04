@@ -15,7 +15,7 @@ contract StableSwapNoRegistryAdapter is IRouterAdapter {
     using SafeMath for uint256;
     using UniERC20 for IERC20;
     using SafeERC20 for IERC20;
-    address public constant _ETH_ADDRESS_ = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
+    address public constant _ETH_ADDRESS_ = 0x0000000000000000000000000000000000000000;
 
     // MetaSwap is a modified version of Swap that allows Swap's LP token to be utilized in pooling with other tokens.
     // As an example, if there is a Swap pool consisting of [DAI, USDC, USDT]. Then a MetaSwap pool can be created

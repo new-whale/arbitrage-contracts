@@ -15,7 +15,7 @@ contract IsoAdapter is IRouterAdapter {
     using SafeMath for uint256;
     using UniERC20 for IERC20;
 
-    address constant _ETH_ADDRESS_ = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
+    address constant _ETH_ADDRESS_ = 0x0000000000000000000000000000000000000000;
 
     function getAmountOut(
         address,

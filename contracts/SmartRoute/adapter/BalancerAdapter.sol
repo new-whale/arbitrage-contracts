@@ -10,7 +10,7 @@ import "hardhat/console.sol";
 
 contract BalancerAdapter is IRouterAdapter {
     using UniERC20 for IERC20;
-    address public constant _ETH_ADDRESS_ = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
+    address public constant _ETH_ADDRESS_ = 0x0000000000000000000000000000000000000000;
 
     function vault(address pool) public view returns (address) {
         return IBalancerPool(pool).getVault();

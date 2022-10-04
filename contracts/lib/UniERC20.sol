@@ -8,7 +8,7 @@ library UniERC20 {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
-    IERC20 private constant _ETH_ADDRESS_ = IERC20(0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE);
+    IERC20 private constant _ETH_ADDRESS_ = IERC20(0x0000000000000000000000000000000000000000);
 
     function universalApproveMax(
         IERC20 token,

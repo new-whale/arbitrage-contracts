@@ -27,7 +27,7 @@ contract UniV3Adapter is IRouterAdapter, IUniswapV3SwapCallback {
     uint160 public constant MAX_SQRT_RATIO = 1461446703485210103287273052203988822378723970342;
 
     address payable public immutable _WETH_ADDRESS_;
-    address public constant _ETH_ADDRESS_ = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
+    address public constant _ETH_ADDRESS_ = 0x0000000000000000000000000000000000000000;
 
     constructor(address payable __WETH_ADDRESS_) {
         _WETH_ADDRESS_ = __WETH_ADDRESS_;

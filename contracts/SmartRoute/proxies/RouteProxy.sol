@@ -24,7 +24,7 @@ contract RouteProxy is Withdrawable, ReentrancyGuard {
 
     // ============ Storage ============
 
-    address constant _ETH_ADDRESS_ = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
+    address constant _ETH_ADDRESS_ = 0x0000000000000000000000000000000000000000;
 
     // ============ Events ============
 

@@ -15,7 +15,7 @@ contract StableSwapAdapter is IRouterAdapter {
     using SafeMath for uint256;
     using UniERC20 for IERC20;
     using SafeERC20 for IERC20;
-    address public constant _ETH_ADDRESS_ = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
+    address public constant _ETH_ADDRESS_ = 0x0000000000000000000000000000000000000000;
     address public immutable registry;
     address public immutable _WETH_ADDRESS_;
 
