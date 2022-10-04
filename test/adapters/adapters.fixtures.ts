@@ -2,11 +2,13 @@ import { ethers } from 'hardhat';
 import { config } from '../../config/klaytn_config';
 import type {
   BalancerAdapter,
+  IsoAdapter,
   KlayswapAdapter,
   UniV2Adapter,
 } from '../../src/types/SmartRoute/adapter';
 import {
   BalancerAdapter__factory,
+  IsoAdapter__factory,
   KlayswapAdapter__factory,
   UniV2Adapter__factory,
 } from '../../src/types/factories/SmartRoute/adapter';
@@ -16,6 +18,7 @@ import { UniV2Viewer } from '../../src/types/Viewer';
 export async function deployAdaptersFixture(): Promise<{
   uniV2Adapter: UniV2Adapter;
   klayswapAdapter: KlayswapAdapter;
+  isoAdapter: IsoAdapter;
   balancerAdapter: BalancerAdapter;
 }> {
   const [signer] = await ethers.getSigners();
@@ -36,6 +39,10 @@ export async function deployAdaptersFixture(): Promise<{
   const klayswapAdapter = await klayswapAdapterFactory.deploy(config.UniV2Factories.Klayswap[0] as string);
   await klayswapAdapter.deployed();
 
+  const isoAdapterFactory = new IsoAdapter__factory(signer);
+  const isoAdapter = await isoAdapterFactory.deploy();
+  await isoAdapter.deployed();
+
   const balancerAdapterFactory = new BalancerAdapter__factory(signer);
   const balancerAdapter = await balancerAdapterFactory.deploy();
   await balancerAdapter.deployed();
@@ -43,6 +50,7 @@ export async function deployAdaptersFixture(): Promise<{
   return {
     uniV2Adapter,
     klayswapAdapter,
+    isoAdapter,
     balancerAdapter,
   };
 }

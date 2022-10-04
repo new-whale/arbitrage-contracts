@@ -1,5 +1,5 @@
 import type { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { BalancerAdapter, KlayswapAdapter, UniV2Adapter } from '../src/types/SmartRoute/adapter';
+import { BalancerAdapter, IsoAdapter, KlayswapAdapter, UniV2Adapter } from '../src/types/SmartRoute/adapter';
 import { UniV2Viewer, BalancerViewer } from '../src/types/Viewer';
 
 // import type { Greeter } from '../src/types/Greeter';
@@ -12,6 +12,7 @@ declare module 'mocha' {
     balancerViewer: BalancerViewer;
     balancerAdapter: BalancerAdapter;
     klayswapAdapter: KlayswapAdapter;
+    isoAdapter: IsoAdapter;
     loadFixture: <T>(fixture: Fixture<T>) => Promise<T>;
     signers: Signers;
   }

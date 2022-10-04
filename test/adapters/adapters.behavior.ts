@@ -8,18 +8,49 @@ export function swapKlayswapAdapter(): void {
   it('swap 1 KLAY -> kDAI -> MBX -> oUSDT', async function () {
     const abi = ethers.utils.defaultAbiCoder;
 
+    const klayOwner = await ethers.getImpersonatedSigner('0x96BEA8b38a8D558d598770A6babBfc78015823e3');
+    const amountIn = ethers.utils.parseEther('1');
+
+    const deposit = await klayOwner.sendTransaction({
+      to: this.klayswapAdapter.address,
+      value: amountIn,
+    });
+    await deposit.wait();
+
     const output = await this.klayswapAdapter.callStatic.swapExactIn(
       config.Tokens.KLAY.address,
-      ethers.utils.parseUnits('1', config.Tokens.KLAY.decimal),
+      amountIn,
       config.Tokens.oUSDT.address,
       abi.encode(['address[]'], [[config.Tokens.kDAI.address, config.Tokens.MBX.address]]),
       this.signers.admin.address,
-      {
-        value: ethers.utils.parseUnits('1', config.Tokens.KLAY.decimal),
-      },
     );
 
     console.log('oUSDT:', ethers.utils.formatUnits(output, config.Tokens.oUSDT.decimal));
+  });
+}
+
+export function swapIsoAdapter(): void {
+  it('swap 1 KLAY -> 1 WKLAY(CLA)', async function () {
+    const abi = ethers.utils.defaultAbiCoder;
+
+    const klayOwner = await ethers.getImpersonatedSigner('0x96BEA8b38a8D558d598770A6babBfc78015823e3');
+    const amountIn = ethers.utils.parseEther('1');
+
+    const deposit = await klayOwner.sendTransaction({
+      to: this.isoAdapter.address,
+      value: amountIn,
+    });
+    await deposit.wait();
+
+    const output = await this.isoAdapter.callStatic.swapExactIn(
+      config.Tokens.KLAY.address,
+      amountIn,
+        config.UniV2Factories.Claimswap[2] as string,
+        abi.encode([], []),
+        klayOwner.address,
+    );
+
+    expect(output).be.equal(amountIn);
   });
 }
 
