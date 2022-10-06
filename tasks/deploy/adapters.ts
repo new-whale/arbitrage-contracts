@@ -2,7 +2,7 @@ import { task } from 'hardhat/config';
 import type { TaskArguments } from 'hardhat/types';
 
 import { config } from '../../config/klaytn_config';
-import { BalancerAdapter__factory, IsoAdapter__factory, KlayswapAdapter__factory, UniV2Adapter__factory } from '../../src/types/factories/SmartRoute/adapter';
+import { BalancerAdapter__factory, I4IAdapter__factory, IsoAdapter__factory, KlayswapAdapter__factory, UniV2Adapter__factory } from '../../src/types/factories/SmartRoute/adapter';
 import { RouteProxy__factory } from '../../src/types/factories/SmartRoute/proxies';
 
 task('deploy:Adapters').setAction(async function (taskArguments: TaskArguments, { ethers }) {
@@ -27,6 +27,11 @@ task('deploy:Adapters').setAction(async function (taskArguments: TaskArguments, 
   const balancerAdapter = await balancerAdapterFactory.deploy();
   await balancerAdapter.deployed();
   console.log('BalancerAdapter deployed to: ', balancerAdapter.address);
+
+  const i4iAdapterFactory = new I4IAdapter__factory(signer);
+  const i4iAdapter = await i4iAdapterFactory.deploy();
+  await i4iAdapter.deployed();
+  console.log('I4iAdapter deployed to: ', i4iAdapter.address);
 
   const routeProxyFactory = new RouteProxy__factory(signer);
   const routeProxy = await routeProxyFactory.deploy();

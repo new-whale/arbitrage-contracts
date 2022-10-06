@@ -2,12 +2,14 @@ import { ethers } from 'hardhat';
 import { config } from '../../config/klaytn_config';
 import type {
   BalancerAdapter,
+  I4IAdapter,
   IsoAdapter,
   KlayswapAdapter,
   UniV2Adapter,
 } from '../../src/types/SmartRoute/adapter';
 import {
   BalancerAdapter__factory,
+  I4IAdapter__factory,
   IsoAdapter__factory,
   KlayswapAdapter__factory,
   UniV2Adapter__factory,
@@ -22,6 +24,7 @@ export async function deployAdaptersFixture(): Promise<{
   klayswapAdapter: KlayswapAdapter;
   isoAdapter: IsoAdapter;
   balancerAdapter: BalancerAdapter;
+  i4iAdapter: I4IAdapter;
   routeProxy: RouteProxy;
 }> {
   const [signer] = await ethers.getSigners();
@@ -50,6 +53,10 @@ export async function deployAdaptersFixture(): Promise<{
   const balancerAdapter = await balancerAdapterFactory.deploy();
   await balancerAdapter.deployed();
 
+  const i4iAdapterFactory = new I4IAdapter__factory(signer);
+  const i4iAdapter = await i4iAdapterFactory.deploy();
+  await i4iAdapter.deployed();
+
   const routeProxyFactory = new RouteProxy__factory(signer);
   const routeProxy = await routeProxyFactory.deploy();
   await routeProxy.deployed();
@@ -59,6 +66,7 @@ export async function deployAdaptersFixture(): Promise<{
     klayswapAdapter,
     isoAdapter,
     balancerAdapter,
+    i4iAdapter,
     routeProxy,
   };
 }

@@ -39,6 +39,7 @@ const klaytn_config = {
   UniV2Adapter: '0x8cB14929A8144cB5d2c7444b909fdC2Ac966e2ca',
   UniV3Adapter: '0x0000000000000000000000000000000000000000',
   // for curve
+  I4iAdapter: '0x1971D3e7691CFF97C057340F887608d47D186679',
   CurveAdapter: '0x0000000000000000000000000000000000000000',
   // for kinesis swap
   StableSwapNoRegistryAdapter: '0x0000000000000000000000000000000000000000',
@@ -72,8 +73,16 @@ const klaytn_config = {
       address: '0xcee8faf64bb97a73bb51e115aa89c17ffa8dd167',
       decimal: 6,
     },
+    oUSDC: {
+      address: '0x754288077D0fF82AF7a5317C7CB8c444D421d103',
+      decimal: 6,
+    },
     kDAI: {
       address: '0x5c74070fdea071359b86082bd9f9b3deaafbe32b',
+      decimal: 18,
+    },
+    '4NUTS': {
+      address: '0x22e3aC1e6595B64266e0b062E01faE31d9cdD578',
       decimal: 18,
     },
     MBX: {

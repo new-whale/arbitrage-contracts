@@ -79,7 +79,7 @@ export function swapUniV2Adapter(): void {
 }
 
 export function swapBalancerAdapter(): void {
-  it('swap 1 WKLAY -> oUSDT', async function () {
+  it('swap 1 oUSDT -> WKLAY', async function () {
     const abi = ethers.utils.defaultAbiCoder;
 
     const ousdtOwner = await ethers.getImpersonatedSigner('0x96BEA8b38a8D558d598770A6babBfc78015823e3');
@@ -98,6 +98,100 @@ export function swapBalancerAdapter(): void {
     );
 
     console.log('wklay:', ethers.utils.formatUnits(output, config.Tokens.KLAY.decimal));
+  });
+}
+
+export function swapI4iAdapter(): void {
+  it('swap 1 oUSDT -> oUSDC', async function () {
+    const abi = ethers.utils.defaultAbiCoder;
+
+    const ousdtOwner = await ethers.getImpersonatedSigner('0x96BEA8b38a8D558d598770A6babBfc78015823e3');
+    const pool = '0xb0Da0BBE0a13C2c17178aEa2fEC91AA08157F299';
+
+    const ousdt = IERC20__factory.connect(config.Tokens.oUSDT.address, ousdtOwner);
+    const amountIn = ethers.utils.parseUnits('1', config.Tokens.oUSDT.decimal);
+    await (await ousdt.transfer(this.i4iAdapter.address, amountIn)).wait();
+
+    const output = await this.i4iAdapter.callStatic.swapExactIn(
+      config.Tokens.oUSDT.address,
+      amountIn,
+      config.Tokens.oUSDC.address,
+      abi.encode(['address', 'uint256', 'uint256'], [pool, 0, 4]),
+      ousdtOwner.address,
+    );
+  });
+
+  it('swap 1 oUSDT -> 4NUTS', async function () {
+    const abi = ethers.utils.defaultAbiCoder;
+
+    const ousdtOwner = await ethers.getImpersonatedSigner('0x96BEA8b38a8D558d598770A6babBfc78015823e3');
+    const pool = '0xb0Da0BBE0a13C2c17178aEa2fEC91AA08157F299';
+
+    const ousdt = IERC20__factory.connect(config.Tokens.oUSDT.address, ousdtOwner);
+    const amountIn = ethers.utils.parseUnits('1', config.Tokens.oUSDT.decimal);
+    await (await ousdt.transfer(this.i4iAdapter.address, amountIn)).wait();
+
+    const nuts = IERC20__factory.connect(config.Tokens['4NUTS'].address, ousdtOwner);
+    const bef = await nuts.balanceOf(ousdtOwner.address);
+
+    const est = await this.i4iAdapter.callStatic.swapExactIn(
+      config.Tokens.oUSDT.address,
+      amountIn,
+      config.Tokens['4NUTS'].address,
+      abi.encode(['address', 'uint256', 'uint256'], [pool, 1, 4]),
+      ousdtOwner.address,
+    );
+
+    const tx = await this.i4iAdapter.swapExactIn(
+      config.Tokens.oUSDT.address,
+      amountIn,
+      config.Tokens['4NUTS'].address,
+      abi.encode(['address', 'uint256', 'uint256'], [pool, 1, 4]),
+      ousdtOwner.address,
+    );
+    await tx.wait();
+
+    const aft = await nuts.balanceOf(ousdtOwner.address);
+    const diff = aft.sub(bef);
+
+    expect(est).be.equal(diff);
+  });
+
+  it('swap 4NUTS -> oUSDT', async function () {
+    const abi = ethers.utils.defaultAbiCoder;
+
+    const nutsOwner = await ethers.getImpersonatedSigner('0x96BEA8b38a8D558d598770A6babBfc78015823e3');
+    const pool = '0xb0Da0BBE0a13C2c17178aEa2fEC91AA08157F299';
+
+    const nuts = IERC20__factory.connect(config.Tokens['4NUTS'].address, nutsOwner);
+    const ousdt = IERC20__factory.connect(config.Tokens.oUSDT.address, nutsOwner);
+
+    const amountIn = ethers.utils.parseUnits('0.9', config.Tokens['4NUTS'].decimal);
+    await (await nuts.transfer(this.i4iAdapter.address, amountIn)).wait();
+
+    const bef = await ousdt.balanceOf(nutsOwner.address);
+
+    const est = await this.i4iAdapter.callStatic.swapExactIn(
+      config.Tokens['4NUTS'].address,
+      amountIn,
+      config.Tokens.oUSDT.address,
+      abi.encode(['address', 'uint256', 'uint256'], [pool, 2, 4]),
+      nutsOwner.address,
+    );
+
+    const tx = await this.i4iAdapter.swapExactIn(
+      config.Tokens['4NUTS'].address,
+      amountIn,
+      config.Tokens.oUSDT.address,
+      abi.encode(['address', 'uint256', 'uint256'], [pool, 2, 4]),
+      nutsOwner.address,
+    );
+    await tx.wait();
+
+    const aft = await ousdt.balanceOf(nutsOwner.address);
+    const diff = aft.sub(bef);
+
+    expect(est).be.equal(diff);
   });
 }
 

@@ -3,7 +3,7 @@ import type { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signe
 import { ethers } from 'hardhat';
 
 import type { Signers } from '../types';
-import { swapBalancerAdapter, swapIsoAdapter, swapKlayswapAdapter, swapRouteProxy, swapUniV2Adapter } from './adapters.behavior';
+import { swapBalancerAdapter, swapI4iAdapter, swapIsoAdapter, swapKlayswapAdapter, swapRouteProxy, swapUniV2Adapter } from './adapters.behavior';
 import { deployAdaptersFixture } from './adapters.fixtures';
 
 describe('Unit tests', function () {
@@ -18,11 +18,12 @@ describe('Unit tests', function () {
 
   describe('Adapters', function () {
     beforeEach(async function () {
-      const { uniV2Adapter, klayswapAdapter, isoAdapter, balancerAdapter, routeProxy } = await this.loadFixture(deployAdaptersFixture);
+      const { uniV2Adapter, klayswapAdapter, isoAdapter, balancerAdapter, i4iAdapter, routeProxy } = await this.loadFixture(deployAdaptersFixture);
       this.uniV2Adapter = uniV2Adapter;
       this.klayswapAdapter = klayswapAdapter;
       this.isoAdapter = isoAdapter;
       this.balancerAdapter = balancerAdapter;
+      this.i4iAdapter = i4iAdapter;
       this.routeProxy = routeProxy;
     });
 
@@ -30,6 +31,7 @@ describe('Unit tests', function () {
     swapIsoAdapter();
     swapUniV2Adapter();
     swapBalancerAdapter();
+    swapI4iAdapter();
 
     swapRouteProxy();
   });
