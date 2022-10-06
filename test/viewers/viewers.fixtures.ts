@@ -5,6 +5,7 @@ import type {
   BalancerViewer,
   CurveCryptoViewer,
   CurveViewer,
+  I4IViewer,
   StableSwapViewer,
   TokenViewer,
   UniV2Viewer,
@@ -14,6 +15,7 @@ import {
   BalancerViewer__factory,
   CurveCryptoViewer__factory,
   CurveViewer__factory,
+  I4IViewer__factory,
   StableSwapViewer__factory,
   TokenViewer__factory,
   UniV2Viewer__factory,
@@ -25,6 +27,7 @@ export async function deployViewersFixture(): Promise<{
   // curveViewer: CurveViewer;
   // curveCryptoViewer: CurveCryptoViewer;
   uniV2Viewer: UniV2Viewer;
+  i4iViewer: I4IViewer;
   // uniV3Viewer: UniV3Viewer;
   // stableSwapViewer: StableSwapViewer;
   // tokenViewer: TokenViewer;
@@ -45,8 +48,14 @@ export async function deployViewersFixture(): Promise<{
   await balancerViewer.deployed();
   console.log('BalancerViewer: ', balancerViewer.address);
 
+  const i4iViewerFactory = new I4IViewer__factory(signer);
+  const i4iViewer = await i4iViewerFactory.deploy(config.I4IPoolRegistry);
+  await i4iViewer.deployed();
+  console.log('I4iViewer:', i4iViewer.address);
+
   return {
     uniV2Viewer,
     balancerViewer,
+    i4iViewer,
   };
 }

@@ -8,6 +8,7 @@ import type {
 } from '../../src/types/Viewer';
 import {
   BalancerViewer__factory,
+  I4IViewer__factory,
   TokenViewer__factory,
   UniV2Viewer__factory,
 } from '../../src/types/factories/Viewer';
@@ -27,6 +28,11 @@ task('deploy:Viewers').setAction(async function (taskArguments: TaskArguments, {
   const balancerViewer = await balancerViewerFactory.deploy();
   await balancerViewer.deployed();
   console.log('BalancerViewer deployed to: ', balancerViewer.address);
+
+  const i4iViewerFactory = new I4IViewer__factory(signer);
+  const i4iViewer = await i4iViewerFactory.deploy(config.I4IPoolRegistry);
+  await i4iViewer.deployed();
+  console.log('I4iViewer deployed to:', i4iViewer.address);
 
   const tokenViewerFactory = new TokenViewer__factory(signer);
   const tokenViewer: TokenViewer = await tokenViewerFactory.connect(signer).deploy();

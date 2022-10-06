@@ -26,3 +26,16 @@ export function fetchBalancerViewer(): void {
 
   });
 }
+
+export function fetchI4iViewer(): void {
+  it('I4i fetch pool infos', async function () {
+    const pools = await this.i4iViewer.pools();
+
+    console.log('I4i pools:', pools.length);
+
+    for (const pool of pools) {
+      const info = await this.i4iViewer.getPoolInfo(pool);
+      console.log(info.name);
+    }
+  });
+}
