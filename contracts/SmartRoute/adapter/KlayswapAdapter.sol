@@ -51,6 +51,7 @@ contract KlayswapAdapter is IRouterAdapter {
           _output = IERC20(toToken).uniBalanceOf(address(this));
           IERC20(toToken).uniTransfer(to, _output);
         } else {
+          IERC20(fromToken).universalApproveMax(ksp, amountIn);
           IKlayswap(ksp).exchangeKctPos(fromToken, amountIn, toToken, 1, path);
           _output = IERC20(toToken).uniBalanceOf(address(this));
           IERC20(toToken).uniTransfer(to, _output);

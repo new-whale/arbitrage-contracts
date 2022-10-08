@@ -90,7 +90,7 @@ contract RouteProxy is Withdrawable, ReentrancyGuard {
             output += currentAmountIn;
         }
 
-        require(output > minReturnAmount, "Slippage");
+        require(output >= minReturnAmount, "Slippage");
     }
 
     function getSplitSwapOut(
