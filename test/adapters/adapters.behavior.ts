@@ -119,6 +119,15 @@ export function swapI4iAdapter(): void {
       abi.encode(['address', 'uint256', 'uint256'], [pool, 0, 4]),
       ousdtOwner.address,
     );
+
+    const estimated = await this.i4iAdapter.callStatic.getAmountOut(
+      config.Tokens.oUSDT.address,
+      amountIn,
+      config.Tokens.oUSDC.address,
+      abi.encode(['address', 'uint256', 'uint256'], [pool, 0, 4]),
+    );
+
+    expect(output).be.equal(estimated);
   });
 
   it('swap 1 oUSDT -> 4NUTS', async function () {
@@ -134,12 +143,11 @@ export function swapI4iAdapter(): void {
     const nuts = IERC20__factory.connect(config.Tokens['4NUTS'].address, ousdtOwner);
     const bef = await nuts.balanceOf(ousdtOwner.address);
 
-    const est = await this.i4iAdapter.callStatic.swapExactIn(
+    const est = await this.i4iAdapter.callStatic.getAmountOut(
       config.Tokens.oUSDT.address,
       amountIn,
       config.Tokens['4NUTS'].address,
       abi.encode(['address', 'uint256', 'uint256'], [pool, 1, 4]),
-      ousdtOwner.address,
     );
 
     const tx = await this.i4iAdapter.swapExactIn(
@@ -154,7 +162,8 @@ export function swapI4iAdapter(): void {
     const aft = await nuts.balanceOf(ousdtOwner.address);
     const diff = aft.sub(bef);
 
-    expect(est).be.equal(diff);
+    expect(est.lt(diff.mul(1001).div(1000))).be.true;
+    expect(est.gt(diff.mul(999).div(1000))).be.true;
   });
 
   it('swap 4NUTS -> oUSDT', async function () {
@@ -254,14 +263,11 @@ export function swapRouteProxy(): void {
       },
     );
 
-    const output = await this.routeProxy.callStatic.getSplitSwapOut(
+    const output = await this.routeProxy.callStatic.getLinearSwapOut(
       config.Tokens.KLAY.address,
       ethers.utils.parseEther('1'),
       config.Tokens.oUSDT.address,
-      [1],
-      [
-        swap1,
-      ],
+      swap1,
     );
 
     const tx = await this.routeProxy.splitSwap(
