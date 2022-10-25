@@ -93,36 +93,54 @@ contract RouteProxy is Withdrawable, ReentrancyGuard {
         require(output >= minReturnAmount, "Slippage");
     }
 
-    function getSplitSwapOut(
+    function arbSwap(
+        address fromToken,
+        uint256 amountIn,
+        address to,
+        MultiAMMLib.Swap[] calldata swaps
+    ) public payable nonReentrant returns (uint256 output) {
+        uint256 estimated = getLinearSwapOut(fromToken, amountIn, fromToken, swaps);
+        require(estimated >= amountIn, "SLIP1");
+
+        if (swaps[0].fromToken == _ETH_ADDRESS_) {
+            payable(swaps[0].recipient).transfer(amountIn);
+        } else {
+            IERC20(swaps[0].fromToken).transferFrom(msg.sender, swaps[0].recipient, amountIn);
+        }
+
+        output = amountIn;
+        for (uint i; i < swaps.length; i++) {
+            address swapTo = (i < swaps.length - 1) ?
+                swaps[i+1].recipient :
+                to;
+
+            output = IRouterAdapter(payable(swaps[i].adapter)).swapExactIn(
+                swaps[i].fromToken,
+                output,
+                swaps[i].toToken,
+                swaps[i].moreInfo,
+                swapTo
+            );
+        }
+
+        require(output >= amountIn, "SLIP2");
+    }
+
+    function getLinearSwapOut(
         address fromToken,
         uint256 amountIn,
         address toToken,
-        uint256[] calldata weights,
-        MultiAMMLib.Swap[][] calldata swaps
+        MultiAMMLib.Swap[] calldata swaps
     ) public returns (uint256 output) {
-        require(weights.length == swaps.length, "WS LEN NOT MATCH");
+        output = amountIn;
 
-        uint256 totalWeight = 0;
-        for (uint i; i < weights.length; i++) {
-            totalWeight += weights[i];
-        }
-
-        uint256 restAmountIn = amountIn;
-        for (uint i; i < weights.length; i++) {
-            uint256 currentAmountIn = i == weights.length - 1 ?
-                restAmountIn :
-                amountIn.mul(weights[i]).div(totalWeight);
-            restAmountIn = restAmountIn.sub(currentAmountIn);
-
-            for (uint j; j < swaps[i].length; j++) {
-                currentAmountIn = IRouterAdapter(payable(swaps[i][j].adapter)).getAmountOut(
-                    swaps[i][j].fromToken,
-                    currentAmountIn,
-                    swaps[i][j].toToken,
-                    swaps[i][j].moreInfo
-                );
-            }
-            output += currentAmountIn;
+        for (uint i; i < swaps.length; i++) {
+            output = IRouterAdapter(payable(swaps[i].adapter)).getAmountOut(
+                swaps[i].fromToken,
+                output,
+                swaps[i].toToken,
+                swaps[i].moreInfo
+            );
         }
     }
 }

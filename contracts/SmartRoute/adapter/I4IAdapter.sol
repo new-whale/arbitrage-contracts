@@ -22,7 +22,25 @@ contract I4IAdapter is IRouterAdapter {
         uint256 amountIn,
         address toToken,
         bytes calldata moreInfo
-    ) external override returns (uint256 _output) {
+    ) external view override returns (uint256 _output) {
+        (address pool, uint256 tp, uint256 ncoin) = abi.decode(moreInfo, (address, uint256, uint256));
+
+        if (tp == 0) { // swap
+            uint256 i = II4ISwapPool(pool).coinIndex(fromToken);
+            uint256 j = II4ISwapPool(pool).coinIndex(toToken);
+            _output = II4ISwapPool(pool).getDy(i, j, amountIn);
+        } else if (tp == 1) { // token -> lp
+            uint256 i = II4ISwapPool(pool).coinIndex(fromToken);
+            uint256[] memory amounts = new uint256[](ncoin);
+            amounts[i] = amountIn;
+            // practical 
+            _output = II4ISwapPool(pool).calcTokenAmount(amounts, true).mul(9996465).div(10000000);
+        } else if (tp == 2) { // lp -> token
+            uint256 j = II4ISwapPool(pool).coinIndex(toToken);
+            _output = II4ISwapPool(pool).calcWithdrawOneCoin(amountIn, j);
+        } else {
+            revert("INVALID TYPE");
+        }
     }
 
     function swapExactIn(
