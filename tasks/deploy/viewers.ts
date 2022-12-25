@@ -12,6 +12,7 @@ import {
   TokenViewer__factory,
   UniV2Viewer__factory,
 } from '../../src/types/factories/Viewer';
+import { StoneHunter__factory } from '../../src/types/factories/StoneHunter__factory';
 
 task('deploy:Viewers').setAction(async function (taskArguments: TaskArguments, { ethers }) {
   const [signer] = await ethers.getSigners();
@@ -38,4 +39,9 @@ task('deploy:Viewers').setAction(async function (taskArguments: TaskArguments, {
   const tokenViewer: TokenViewer = await tokenViewerFactory.connect(signer).deploy();
   await tokenViewer.deployed();
   console.log('TokenViewer deployed to: ', tokenViewer.address);
+
+//   const stoneHunterFactory = new StoneHunter__factory(signer);
+//   const stoneHunter = await stoneHunterFactory.deploy();
+//   await stoneHunter.deployed();
+//   console.log('StoneHunter:', stoneHunter.address);
 });
