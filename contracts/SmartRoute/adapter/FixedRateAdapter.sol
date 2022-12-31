@@ -42,7 +42,7 @@ contract FixedRateAdapter is IRouterAdapter {
         IERC20(toToken).uniTransfer(to, _output);
     }
 
-    function setPrice(address fromToken, address toToken, uint256 price) onlyOwner {
+    function setPrice(address fromToken, address toToken, uint256 price) onlyOwner external {
         prices[fromToken][toToken] = price;
     }
 }
