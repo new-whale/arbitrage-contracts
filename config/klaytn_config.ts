@@ -90,6 +90,16 @@ const klaytn_config = {
       decimal: 18,
     },
   },
+
+  Klap: {
+    LendingPool: '0x1b9c074111ec65E1342Ea844f7273D5449D2194B',
+    Klay: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+    Wklay: '0xe4f05a66ec68b54a58b17c22107b02e0232cc817',
+    Aklay: '0x5BC2785782C0bba162C78a76F0eE308ec5f601B7',
+    AUSDC: '0x7D274dce8E2467fc4cdb6E8e1755db5686DAEBBb',
+    USDC: '0x6270b58be569a7c0b8f47594f191631ae5b2c86c',
+    User: '0x016b3594e33854efb8f6ae3d861671a94698882e',
+  },
 };
 
 export { klaytn_config as config };
