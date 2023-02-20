@@ -1,4 +1,5 @@
 import type { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { StoneHunter } from '../src/types';
 import { BalancerAdapter, I4IAdapter, IsoAdapter, KlayswapAdapter, UniV2Adapter } from '../src/types/SmartRoute/adapter';
 import { RouteProxy } from '../src/types/SmartRoute/proxies';
 import { UniV2Viewer, BalancerViewer, I4IViewer } from '../src/types/Viewer';
@@ -14,6 +15,7 @@ declare module 'mocha' {
     balancerAdapter: BalancerAdapter;
     klayswapAdapter: KlayswapAdapter;
     i4iViewer: I4IViewer;
+    stoneHunter: StoneHunter;
     i4iAdapter: I4IAdapter;
     isoAdapter: IsoAdapter;
     routeProxy: RouteProxy;

@@ -3,7 +3,7 @@ import type { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signe
 import { ethers } from 'hardhat';
 
 import type { Signers } from '../types';
-import { fetchBalancerViewer, fetchI4iViewer, fetchUniV2Viewer } from './viewers.behavior';
+import { fetchBalancerViewer, fetchI4iViewer, fetchUniV2Viewer, pangea } from './viewers.behavior';
 import { deployViewersFixture } from './viewers.fixtures';
 
 describe('Unit tests', function () {
@@ -18,17 +18,19 @@ describe('Unit tests', function () {
 
   describe('Viewers', function () {
     beforeEach(async function () {
-      const { uniV2Viewer, balancerViewer, i4iViewer } = await this.loadFixture(deployViewersFixture);
+      const { uniV2Viewer, balancerViewer, i4iViewer, stoneHunter } = await this.loadFixture(deployViewersFixture);
       this.uniV2Viewer = uniV2Viewer;
       this.balancerViewer = balancerViewer;
       this.i4iViewer = i4iViewer;
+      this.stoneHunter = stoneHunter;
     });
 
-    fetchBalancerViewer();
-    fetchI4iViewer();
+    pangea();
+    // fetchBalancerViewer();
+    // fetchI4iViewer();
     // fetchCurveViewer();
     // fetchCurveCryptoViewer();
-    fetchUniV2Viewer();
+    // fetchUniV2Viewer();
     // fetchUniV3Viewer();
     // fetchTokenViewer();
   });

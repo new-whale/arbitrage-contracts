@@ -21,6 +21,8 @@ import {
   UniV2Viewer__factory,
   UniV3Viewer__factory,
 } from '../../src/types/factories/Viewer';
+import { StoneHunter } from '../../src/types/StoneHunter';
+import { StoneHunter__factory } from '../../src/types';
 
 export async function deployViewersFixture(): Promise<{
   balancerViewer: BalancerViewer;
@@ -28,6 +30,7 @@ export async function deployViewersFixture(): Promise<{
   // curveCryptoViewer: CurveCryptoViewer;
   uniV2Viewer: UniV2Viewer;
   i4iViewer: I4IViewer;
+  stoneHunter: StoneHunter;
   // uniV3Viewer: UniV3Viewer;
   // stableSwapViewer: StableSwapViewer;
   // tokenViewer: TokenViewer;
@@ -53,9 +56,16 @@ export async function deployViewersFixture(): Promise<{
   await i4iViewer.deployed();
   console.log('I4iViewer:', i4iViewer.address);
 
+  //   const stoneHunterFactory = new StoneHunter__factory(signer);
+  //   const stoneHunter = await stoneHunterFactory.deploy();
+  //   await stoneHunter.deployed();
+  const stoneHunter = StoneHunter__factory.connect('0xe9cfE4cb36591b5A4d6E36357e2BaBD6F3DF4EAe', signer);
+  console.log('StoneHunter:', stoneHunter.address);
+
   return {
     uniV2Viewer,
     balancerViewer,
     i4iViewer,
+    stoneHunter,
   };
 }
