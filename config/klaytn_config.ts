@@ -98,7 +98,25 @@ const klaytn_config = {
     Aklay: '0x5BC2785782C0bba162C78a76F0eE308ec5f601B7',
     AUSDC: '0x7D274dce8E2467fc4cdb6E8e1755db5686DAEBBb',
     USDC: '0x6270b58be569a7c0b8f47594f191631ae5b2c86c',
-    User: '0x016b3594e33854efb8f6ae3d861671a94698882e',
+    WormUSDC: '0x608792deb376cce1c9fa4d0e6b7b44f507cffa6a',
+    KlayDeptUsers: [
+      {
+        Addr: '0x016b3594e33854efb8f6ae3d861671a94698882e',
+        Collat: '0x6270b58be569a7c0b8f47594f191631ae5b2c86c',
+      },
+      {
+        Addr: '0x016b3594e33854efb8f6ae3d861671a94698882e',
+        Collat: '0x608792deb376cce1c9fa4d0e6b7b44f507cffa6a',
+      },
+      {
+        Addr: '0xe4e406171bcbf0b9b1ff990691c289b20471b654',
+        Collat: '0x6270b58be569a7c0b8f47594f191631ae5b2c86c',
+      },
+      {
+        Addr: '0x4a1adc5b4bd5f7bd47a8a08025b8c38851dc5b76',
+        Collat: '0x608792deb376cce1c9fa4d0e6b7b44f507cffa6a',
+      },
+    ],
   },
 };
 

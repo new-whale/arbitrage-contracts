@@ -85,6 +85,7 @@ const config: HardhatUserConfig = {
     hardhat: {
       accounts: {
         mnemonic,
+        accountsBalance: '100000000000000000000000000',
       },
       chainId: chainIds.hardhat,
       forking: {
